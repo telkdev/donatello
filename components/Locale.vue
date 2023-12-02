@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex">
     <Select v-model="locale" :values="locales" />
   </div>
 </template>

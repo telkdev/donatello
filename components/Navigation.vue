@@ -1,16 +1,18 @@
 <template>
   <nav>
-    <ul class="flex items-center gap-28">
+    <ul
+      class="flex flex-col md:flex-row items-center gap-4 md:gap-10 lg:gap-28 text-2xl md:text-base"
+    >
       <li v-for="(nav, index) of navigation" :key="index">
-        <NuxtLink :to="nav.path" :active-class="'text-red-950'">{{ nav.name }}</NuxtLink>
+        <NuxtLink :to="nav.path" :active-class="'text-red-950'">{{
+          nav.name
+        }}</NuxtLink>
       </li>
     </ul>
   </nav>
 </template>
 
 <script lang="ts" setup>
-// import { ref } from 'vue'
-
 const navigation = ref([
   {
     name: "Home",

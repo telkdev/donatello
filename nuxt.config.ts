@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { defineNuxtConfig } from 'nuxt/config'
+import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -9,6 +9,8 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/strapi",
     "@nuxtjs/i18n",
+    "nuxt-icons",
+    "@vueuse/nuxt",
   ],
   pinia: {
     autoImports: [

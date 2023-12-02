@@ -16,7 +16,11 @@ export default {
     extend: {
       colors: {
         graphic: "#4F4C4C",
-        grey: "#9D9C9C",
+        grey: "#666666",
+        "light-grey": "#E1E1E1",
+      },
+      screens: {
+        sm: { min: "320px", max: "767px" },
       },
     },
   },
@@ -25,16 +29,18 @@ export default {
       addComponents({
         ".container": {
           margin: "0 auto",
-          padding: "0 2rem",
+          padding: "0 1rem",
           maxWidth: "100%",
           "@screen sm": {
             maxWidth: "640px",
           },
           "@screen md": {
             maxWidth: "768px",
+            padding: "0 2rem",
           },
           "@screen xl": {
             maxWidth: "1440px",
+            padding: "0 2rem",
             padding: "0 7.5rem",
           },
         },

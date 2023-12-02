@@ -2,9 +2,9 @@
   <ul
     class="flex items-center gap-1 rounded-xl overflow-hidden border border-graphic"
   >
-    <li v-for="value of values" class="py-1 px-2">
+    <li v-for="value of values" class="py-1 px-2 text-grey">
       <button
-        class="uppercase font-bold text-grey"
+        class="uppercase font-bold"
         :class="{ 'text-black': value === props.modelValue }"
         @click="selectValue(value)"
       >
