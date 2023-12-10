@@ -1,7 +1,7 @@
 <template>
   <RouterLink
     :to="props.path"
-    class="text-white bg-graphic py-4 px-8 text-center border border-transparent hover:border-graphic hover:bg-transparent hover:text-graphic"
+    class="text-white block bg-graphic py-4 px-8 text-center border border-transparent hover:border-graphic hover:bg-transparent hover:text-graphic"
     :class="sizeClasses"
     >{{ props.text }}</RouterLink
   >

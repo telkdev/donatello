@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <Select v-model="locale" :values="locales" />
+    <ToggleSelect v-model="locale" :values="locales" />
   </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <section class="bg-light-grey">
     <div
-      class="container py-20 md:py-60 flex flex-col md:flex-row items-center gap-5 justify-between"
+      class="container py-20 md:py-40 flex flex-col md:flex-row items-center gap-5 justify-between"
     >
       <div class="space-y-5 md:space-y-12 flex-grow">
         <h1 class="text-4xl md:text-6xl uppercase font-bold text-graphic">
@@ -26,7 +26,7 @@
       </div>
       <div class="flex-grow">
         <img
-          src="@/assets/images/map.webp"
+          src="/images/map.webp"
           width="530"
           height="374"
           alt="Map of Ukraine"
