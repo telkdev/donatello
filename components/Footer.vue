@@ -2,7 +2,7 @@
   <footer class="bg-light-grey py-12 md:py-20">
     <div class="container">
       <div
-        class="flex flex-col items-center md:flex-row justify-between gap-4 pb-24 border-b border-graphic mb-12"
+        class="flex flex-col items-center md:flex-row justify-between gap-4 md:gap-10 pb-24 border-b border-graphic mb-12"
       >
         <NuxtLink to="/" aria-label="Home page">
           <Logo />

@@ -17,10 +17,9 @@ export default {
       colors: {
         graphic: "#4F4C4C",
         grey: "#666666",
-        grey2: "#9D9C9C", //TODO: discuss about colors
         "mid-grey": "#F0F0F0",
         "light-grey": "#E1E1E1",
-        "light-grey2": "#F5F5F5",
+        "light-grey-100": "#F5F5F5",
       },
       screens: {
         sm: { min: "320px", max: "767px" },
@@ -49,5 +48,6 @@ export default {
         },
       });
     },
+    require("@tailwindcss/typography"),
   ],
 };

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3 class="text-2xl text-grey uppercase mb-10 md:mb-16">Top Funds</h3>
+    <h3 class="text-2xl text-grey uppercase mb-10 md:mb-16">Closest</h3>
 
     <ul class="flex flex-wrap items-center gap-5">
       <li
-        v-for="fund in topFunds"
+        v-for="fund in easiestToCloseFunds"
         :key="fund.title"
         class="p-6 border w-full border-graphic bg-mid-grey"
       >
@@ -14,7 +14,9 @@
             :alt="fund.title"
             class="w-20 h-20"
           />
-          <span class="text-center text-sm">{{ fund.title }}</span>
+          <span class="text-center text-base">
+            <b>{{ amountLeftToCollect(fund) }} </b>₴ left
+          </span>
         </NuxtLink>
       </li>
     </ul>
@@ -28,11 +30,22 @@ const props = defineProps<{
   funds: Fund[];
 }>();
 
-const topFunds = computed(() => {
+function amountLeftToCollect(fund: Fund) {
+  return fund.totalGoal - fund.collectedAmount;
+}
+
+const easiestToCloseFunds = computed(() => {
   const LIMIT = 5;
 
   return (
-    props.funds.sort((a, b) => b.totalGoal - a.totalGoal).slice(0, LIMIT) || []
+    props.funds
+      .sort((a, b) => {
+        const amountLeftA = amountLeftToCollect(a);
+        const amountLeftB = amountLeftToCollect(b);
+
+        return amountLeftA - amountLeftB;
+      })
+      .slice(0, LIMIT) || []
   );
 });
 </script>

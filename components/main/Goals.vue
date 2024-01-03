@@ -12,9 +12,9 @@
           :key="index"
           class="flex items-start gap-10"
         >
-          <span class="text-2xl md:text-3xl text-grey shrink-0">{{
-            addIndex(index)
-          }}</span>
+          <span class="text-2xl md:text-3xl text-grey shrink-0">
+            {{ addIndex(index) }}
+          </span>
           <div>
             <h3 class="text-xl text-grey mb-8">{{ goal.title }}</h3>
             <p class="text-lg">{{ goal.description }}</p>
