@@ -18,11 +18,7 @@
               <li
                 class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
               >
-                <Icon
-                  name="categories/military"
-                  class="w-4 flex-shrink-0 flex"
-                  aria-hidden="true"
-                />
+                <Image :path="fund.category.data.attributes.icon.data.attributes.url" class="w-4 mr-1" :aria-hidden="true" :alt="fund.category.data.attributes.displayName" />
                 {{ fund.category.data.attributes.displayName }}
               </li>
             </ul>
@@ -109,7 +105,13 @@ const { data: strapiFund } = await useAsyncData(async () => {
   const { data } = await find<Fund>("fund-collections", {
     populate: {
       organization: true,
-      category: true,
+      category: {
+        populate: {
+          icon: {
+            fields: ["name", "url"],
+          },
+        },
+      },
       requisites: {
         populate: {
           requisite_type: {

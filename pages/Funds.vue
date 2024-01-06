@@ -23,7 +23,7 @@
           <div v-else>No funds found</div>
         </div>
         <aside class="mt-2 space-y-10 md:space-y-16">
-          <AsidesClosestToCompleteFunds :funds="funds || []" />
+          <!-- <AsidesClosestToCompleteFunds :funds="funds || []" /> -->
           <AsidesTopFunds :funds="funds || []" />
         </aside>
       </div>
@@ -40,7 +40,13 @@ const { data: funds } = await useAsyncData(async () => {
   const { data } = await find<Fund>("fund-collections", {
     populate: {
       organization: true,
-      category: true,
+      category: {
+        populate: {
+          icon: {
+            fields: ["name", "url"],
+          },
+        },
+      },
       requisites: {
         populate: {
           requisite_type: true,

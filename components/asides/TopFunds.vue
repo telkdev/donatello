@@ -8,7 +8,7 @@
         :key="fund.title"
         class="p-6 border w-full border-graphic bg-mid-grey"
       >
-        <NuxtLink :to="fund.title" class="flex flex-col items-center gap-6">
+        <NuxtLink :to="fund.slug" class="flex flex-col items-center gap-6">
           <img
             :src="'/images/funds/1.webp'"
             :alt="fund.title"

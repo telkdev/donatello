@@ -1,10 +1,14 @@
+import type { WithStrapiStructure } from "~/utilities/strapiDataStructure";
 import type { StrapiOrganization } from "../organizations/types";
-import type { StrapiRequisite } from "../requisites/types";
+import type { Media, StrapiRequisite } from "../requisites/types";
 import type { RichTextBlocks } from "../richText";
 
 export type Category = {
   displayName: string;
   createdAt: string;
+  icon: {
+    data: WithStrapiStructure<Media>;
+  };
 };
 
 type StrapiCategory = {

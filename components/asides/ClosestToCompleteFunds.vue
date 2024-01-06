@@ -8,7 +8,7 @@
         :key="fund.title"
         class="p-6 border w-full border-graphic bg-mid-grey"
       >
-        <NuxtLink :to="fund.title" class="flex flex-col items-center gap-6">
+        <NuxtLink :to="fund.s" class="flex flex-col items-center gap-6">
           <img
             :src="'/images/funds/1.webp'"
             :alt="fund.title"
@@ -31,7 +31,8 @@ const props = defineProps<{
 }>();
 
 function amountLeftToCollect(fund: Fund) {
-  return fund.totalGoal - fund.collectedAmount;
+  const result = fund.totalGoal - fund.collectedAmount;
+  return result > 0 ? result : 0;
 }
 
 const easiestToCloseFunds = computed(() => {
