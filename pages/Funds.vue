@@ -38,7 +38,15 @@ const { find } = useStrapi();
 
 const { data: funds } = await useAsyncData(async () => {
   const { data } = await find<Fund>("fund-collections", {
-    populate: ["organization", "category", "requisites"],
+    populate: {
+      organization: true,
+      category: true,
+      requisites: {
+        populate: {
+          requisite_type: true,
+        },
+      },
+    },
   });
 
   const fundWithId = data.map((item) => {
@@ -54,7 +62,9 @@ const { data: funds } = await useAsyncData(async () => {
 });
 
 const { data: categories } = await useAsyncData(async () => {
-  const { data } = await find<Category>("categories");
+  const { data } = await find<Category>("categories", {
+    populate: ["icon"],
+  });
 
   return data;
 });

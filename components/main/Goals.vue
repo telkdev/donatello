@@ -2,7 +2,7 @@
   <section>
     <div class="container py-16">
       <h2
-        class="text-2xl md:text-4xl uppercase pb-10 border-b border-graphic mb-14"
+        class="text-2xl md:text-4xl uppercase pb-10 border-b border-graphic mb-14 text-graphic"
       >
         Our main goals
       </h2>

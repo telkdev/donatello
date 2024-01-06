@@ -1,7 +1,7 @@
 <template>
   <header class=" bg-white ">
     <div
-      class="flex items-center justify-between gap-2 container py-5 md:py-16"
+      class="flex items-center justify-between gap-2 container py-5 md:py-12"
     >
       <NuxtLink to="/" aria-label="Home page">
         <Logo />

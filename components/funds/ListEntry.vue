@@ -58,11 +58,10 @@
         <h2 class="text-xl text-graphic mb-5">
           {{ fund.title }}
         </h2>
-        <div class="flex flex-wrap gap-1">
-          <h3 class="text-sm text-grey uppercase">
-            {{ fund.organization.data.attributes.name }}
-          </h3>
-        </div>
+
+        <h3 class="text-sm text-grey uppercase">
+          {{ fund.organization.data.attributes.name }}
+        </h3>
       </div>
     </div>
 
@@ -72,12 +71,12 @@
       class="mb-6"
     />
 
-    <ul v-if="requisits.size" class="flex items-cemter flex-wrap gap-2 mb-6">
+    <ul v-if="requisites.length" class="flex items-cemter flex-wrap gap-2 mb-6">
       <li
-        v-for="requisit in requisits"
+        v-for="requisite in requisites"
         class="rounded-2xl border border-graphic py-2 px-4 text-grey text-xs font-medium"
       >
-        {{ requisit }}
+        {{ requisite }}
       </li>
     </ul>
     <div class="flex justify-between items-center">
@@ -85,10 +84,10 @@
         <span class="block uppercase mb-1">total goal</span>
         <div>
           <span class="text-xl"> {{ fund.totalGoal }} </span>
-          <span class="ml-0">₴</span>
+          <span>₴</span>
         </div>
       </div>
-      <ActionLink text="Support" :path="fund.title" size="md" />
+      <ActionLink text="Support" :path="fund.slug" size="md" />
     </div>
   </div>
 </template>
@@ -96,13 +95,6 @@
 <script lang="ts" setup>
 import { useMediaQuery } from "@vueuse/core";
 import type { Fund } from "./types";
-import type { Requisit } from "../requisities";
-import {
-  isCreditCard,
-  isCryptocurrency,
-  isIBAN,
-  isMonobanka,
-} from "../requisities";
 
 const isDesktop = useMediaQuery("(min-width: 1024px)");
 
@@ -110,31 +102,11 @@ const props = defineProps<{
   fund: Fund;
 }>();
 
-const requisits = computed(() => {
-  const requisits = new Set();
-
-  props.fund.requisites.forEach((requisit) => {
-    requisits.add(requisitDisplay(requisit));
+const requisites = computed(() => {
+  return props.fund.requisites.data.map((requisit) => {
+    return requisit.attributes.requisite_type.data.attributes.displayName;
   });
-
-  return requisits;
 });
-
-function requisitDisplay(requisit: Requisit) {
-  if (isCreditCard(requisit)) {
-    return "Credit Card";
-  }
-  if (isCryptocurrency(requisit)) {
-    return "Cryptocurrency";
-  }
-  if (isIBAN(requisit)) {
-    return "IBAN";
-  }
-  if (isMonobanka(requisit)) {
-    return "Monobanka";
-  }
-  return requisit;
-}
 
 const fundCreatedAt = computed(() => {
   const date = new Date(props.fund.createdAt);

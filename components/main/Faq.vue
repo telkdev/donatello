@@ -2,7 +2,7 @@
   <section class="py-16">
     <div class="container">
       <h2
-        class="text-2xl md:text-4xl uppercase pb-10 border-b border-graphic mb-14"
+        class="text-2xl md:text-4xl uppercase pb-10 border-b border-graphic mb-14 text-graphic"
       >
         Frequently asked questions about funds and how to do stuff
       </h2>

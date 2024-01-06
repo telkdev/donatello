@@ -1,4 +1,4 @@
-type WithStrapiStructure<T> = {
+export type WithStrapiStructure<T> = {
   id: number;
   attributes: T;
   meta?: any;

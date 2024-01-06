@@ -1,5 +1,5 @@
 import type { StrapiOrganization } from "../organizations/types";
-import type { Requisit } from "../requisities";
+import type { StrapiRequisite } from "../requisites/types";
 import type { RichTextBlocks } from "../richText";
 
 export type Category = {
@@ -17,11 +17,12 @@ type StrapiCategory = {
 export type Fund = {
   id: number;
   title: string;
+  slug: string;
   description: RichTextBlocks[];
   createdAt: string;
   totalGoal: number;
   collectedAmount: number;
-  requisites: Requisit[];
+  requisites: StrapiRequisite;
   category: StrapiCategory;
   organization: StrapiOrganization;
 };
