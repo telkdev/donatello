@@ -4,11 +4,11 @@
       <div
         class="hidden lg:block mr-8 border border-graphic flex-shrink-0 w-32 h-32"
       >
-        <img
-          src="/images/map.webp"
-          class="object-contain h-full"
-          alt="imageAlt"
+        <Image
+          :path="fund.image.data.attributes.url"
+          class="object-cover h-full"
           :aria-hidden="!isDesktop"
+          :alt="fund.image.data.attributes.alternativeText"
         />
       </div>
       <div class="lg:flex-grow">
@@ -50,11 +50,11 @@
           </button>
         </div>
         <div class="lg:hidden border border-graphic mb-5">
-          <img
-            src="/images/map.webp"
+          <Image
+            :path="fund.image.data.attributes.url"
             class="w-full object-cover"
-            alt="imageAlt"
             :aria-hidden="isDesktop"
+            :alt="fund.image.data.attributes.alternativeText"
           />
         </div>
         <h2 class="text-xl text-graphic mb-5">

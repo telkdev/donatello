@@ -5,11 +5,11 @@
         <div
           class="hidden lg:block mr-8 border border-graphic flex-shrink-0 max-w-[400px] w-full"
         >
-          <img
-            src="/images/map.webp"
-            class="object-contain h-full"
-            alt="imageAlt"
+          <Image
+            :path="fund.image.data.attributes.url"
+            class="object-cover h-full"
             :aria-hidden="!isDesktop"
+            :alt="fund.image.data.attributes.alternativeText"
           />
         </div>
         <div>
@@ -18,7 +18,12 @@
               <li
                 class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
               >
-                <Image :path="fund.category.data.attributes.icon.data.attributes.url" class="w-4 mr-1" :aria-hidden="true" :alt="fund.category.data.attributes.displayName" />
+                <Image
+                  :path="fund.category.data.attributes.icon.data.attributes.url"
+                  class="w-4 mr-1"
+                  :aria-hidden="true"
+                  :alt="fund.category.data.attributes.displayName"
+                />
                 {{ fund.category.data.attributes.displayName }}
               </li>
             </ul>
@@ -26,11 +31,11 @@
             <span class="text-xs">{{ fundCreatedAt }}</span>
           </div>
           <div class="lg:hidden border border-graphic mb-5">
-            <img
-              src="/images/map.webp"
+            <Image
+              :path="fund.image.data.attributes.url"
               class="w-full object-cover"
-              alt="imageAlt"
               :aria-hidden="isDesktop"
+              :alt="fund.image.data.attributes.alternativeText"
             />
           </div>
           <h1 class="text-3xl text-graphic mb-5 font-normal">
@@ -66,9 +71,40 @@
         >
           payment methods
         </h2>
-        <div v-for="requisite of requisites">
-          owner: {{ requisite.owner }} type: {{ requisite.requisite_type }}
-        </div>
+
+        <Table
+          :columns="[
+            {
+              text: 'Requisite',
+              isLink: false,
+              canCopy: false,
+              isImage: true,
+            },
+            {
+              text: 'Number',
+              isLink: false,
+              canCopy: true,
+              isImage: false,
+            },
+            {
+              text: 'Owner',
+              isLink: false,
+              canCopy: false,
+              isImage: false,
+            },
+            {
+              text: 'Document',
+              isLink: true,
+              canCopy: false,
+              isImage: false,
+            },
+          ]"
+          :data="requisites || []"
+        >
+          <template #documentLink-icon>
+            <img src="@/assets/icons/pdf.svg" class="w-10 h-10 m-auto" />
+          </template>
+        </Table>
       </div>
 
       <div>
@@ -87,7 +123,20 @@
           Reports and documents
         </h2>
 
-        reports list
+        <ul class="flex flex-wrap">
+          <li v-for="item of 10" class="lg:w-1/2 p-1">
+            <a
+              href="#"
+              class="text-graphic flex gap-2 items-center hover:text-red-800 cursor-pointer"
+            >
+              <img
+                src="@/assets/icons/pdf.svg"
+                class="w-10 h-10 flex-shrink-0"
+              />
+              платіжна інструкція - Дрони Шарки
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -101,6 +150,7 @@ import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
 const { find } = useStrapi();
 const route = useRoute();
 
+// TODO: check what fields are needed
 const { data: strapiFund } = await useAsyncData(async () => {
   const { data } = await find<Fund>("fund-collections", {
     populate: {
@@ -112,17 +162,20 @@ const { data: strapiFund } = await useAsyncData(async () => {
           },
         },
       },
+      image: {
+        fields: ["alternativeText", "url"],
+      },
       requisites: {
         populate: {
           requisite_type: {
             populate: {
               icon: {
-                fields: ["name", "url"],
+                fields: ["alternativeText", "url"],
               },
             },
           },
           document: {
-            fields: ["name", "url"],
+            fields: ["name", "url", "ext"],
           },
         },
       },
@@ -149,16 +202,27 @@ const fundCreatedAt = computed(() => {
   return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 });
 
+const runtimeConfig = useRuntimeConfig();
+
 const requisites = computed(() => {
   if (!fund.value) return;
+
   return fund.value.requisites.data.map((requisite) => {
     return {
-      ...fromStrapiDataStracrture(requisite),
-      requisite_type: fromStrapiDataStracrture(
-        requisite.attributes.requisite_type.data
-      ),
-      document: fromStrapiDataStracrture(requisite.attributes.document.data),
+      requisite: {
+        url: `${runtimeConfig.public.strapiUrl}${requisite.attributes.requisite_type.data.attributes.icon.data.attributes.url}`,
+        alt: requisite.attributes.requisite_type.data.attributes.icon.data.attributes.alternativeText,
+      },
+      value: requisite.attributes.value,
+      name: requisite.attributes.owner,
+      documentLink: `${runtimeConfig.public.strapiUrl}${requisite.attributes.document.data.attributes.url}`,
     };
   });
 });
 </script>
+
+<style scoped>
+.pdf {
+  fill: revert-layer;
+}
+</style>

@@ -1,11 +1,12 @@
 export type Media = {
   name: string;
   url: string;
+  alternativeText: string;
 };
 
 export type RequisiteType = {
   displayName: string;
-  icon: Media;
+  icon: StrapiMedia;
 };
 
 export type StrapiRequisiteType = {

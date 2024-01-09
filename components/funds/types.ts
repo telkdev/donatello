@@ -20,6 +20,9 @@ type StrapiCategory = {
 
 export type Fund = {
   id: number;
+  image: {
+    data: WithStrapiStructure<Media>;
+  };
   title: string;
   slug: string;
   description: RichTextBlocks[];

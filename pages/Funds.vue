@@ -47,6 +47,9 @@ const { data: funds } = await useAsyncData(async () => {
           },
         },
       },
+      image: {
+        fields: ["alternativeText", "url"],
+      },
       requisites: {
         populate: {
           requisite_type: true,
