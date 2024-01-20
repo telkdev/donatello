@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "nuxt-icons",
     "@vueuse/nuxt",
+    "nuxt-schema-org",
   ],
   pinia: {
     autoImports: [
@@ -31,6 +32,21 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       strapiUrl: STRAPI_URL,
+    },
+  },
+  app: {
+    head: {
+      title: "Nuxt Strapi",
+      charset: "utf-8",
+      viewport: "width=device-width, initial-scale=1",
+    },
+  },
+  schemaOrg: {
+    identity: {
+      type: "Organization",
+      name: "My Company",
+      url: "https://example.com",
+      logo: "https://example.com/logo.png",
     },
   },
 });

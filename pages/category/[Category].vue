@@ -7,7 +7,7 @@
       >
         <div class="md:col-span-3">
           <div class="flex items-center gap-2 flex-wrap justify-between mb-12">
-            <h1 class="text-2xl text-grey uppercase">Funds</h1>
+            <h1 class="text-2xl text-grey uppercase">Funds by category</h1>
             <Select
               v-model="selectedCategory"
               :options="categoriesOptions"
@@ -33,7 +33,9 @@
 
 <script lang="ts" setup>
 import type { Fund, Category } from "@/components/funds/types";
-import { useFilteredFundsByCategory } from "./useFilteredFundsByCategory";
+import { useFilteredFundsByCategory } from "../useFilteredFundsByCategory";
+
+const route = useRoute();
 
 const { find } = useStrapi();
 
@@ -55,6 +57,11 @@ const { data: funds } = await useAsyncData(async () => {
         populate: {
           requisite_type: true,
         },
+      },
+    },
+    filters: {
+      category: {
+        displayName: route.params.Category, // TODO: fix me
       },
     },
   });
@@ -79,12 +86,12 @@ const { data: categories } = await useAsyncData(async () => {
   return data;
 });
 
+const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
+  useFilteredFundsByCategory(funds);
+
 const categoriesOptions = computed(() => [
   DEFAULT_CATEGORY,
   ...(categories.value?.map((category) => category.attributes.displayName) ||
     []),
 ]);
-
-const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
-  useFilteredFundsByCategory(funds);
 </script>

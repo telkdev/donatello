@@ -211,7 +211,8 @@ const requisites = computed(() => {
     return {
       requisite: {
         url: `${runtimeConfig.public.strapiUrl}${requisite.attributes.requisite_type.data.attributes.icon.data.attributes.url}`,
-        alt: requisite.attributes.requisite_type.data.attributes.icon.data.attributes.alternativeText,
+        alt: requisite.attributes.requisite_type.data.attributes.icon.data
+          .attributes.alternativeText,
       },
       value: requisite.attributes.value,
       name: requisite.attributes.owner,
@@ -219,10 +220,13 @@ const requisites = computed(() => {
     };
   });
 });
-</script>
 
-<style scoped>
-.pdf {
-  fill: revert-layer;
-}
-</style>
+useHead({
+  title: "My App",
+  meta: [{ name: "description", content: "My amazing site." }],
+});
+
+useSchemaOrg({
+  context: "https://schema.org",
+});
+</script>
