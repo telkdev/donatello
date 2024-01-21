@@ -7,12 +7,9 @@
       >
         <div class="md:col-span-3">
           <div class="flex items-center gap-2 flex-wrap justify-between mb-12">
-            <h1 class="text-2xl text-grey uppercase">Funds by category</h1>
-            <Select
-              v-model="selectedCategory"
-              :options="categoriesOptions"
-              class="max-w-[380px] w-full"
-            />
+            <h1 class="text-2xl text-grey uppercase">
+              List of charity funds by category
+            </h1>
           </div>
 
           <ul v-if="filteredFunds?.length" class="space-y-8">
@@ -61,7 +58,7 @@ const { data: funds } = await useAsyncData(async () => {
     },
     filters: {
       category: {
-        displayName: route.params.Category, // TODO: fix me
+        displayName: route.params.Category,
       },
     },
   });

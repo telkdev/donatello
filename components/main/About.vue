@@ -17,10 +17,10 @@
           <div
             class="w-28 h-28 flex rounded-full border border-graphic absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white"
           >
-            <Icon name="about/volunteer" class="text-grey w-14 m-auto" />
+            <Icon name="about/donor" class="text-grey w-14 m-auto" />
           </div>
           <h3 class="uppercase text-grey text-lg text-center mb-2">
-            information for volunteers
+            information for donors
           </h3>
           <div class="space-y-2">
             <p>
@@ -43,14 +43,15 @@
             </p>
           </div>
         </li>
+
         <li class="relative border border-graphic pt-20 pb-5 px-2">
           <div
             class="w-28 h-28 flex rounded-full border border-graphic absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white"
           >
-            <Icon name="about/donor" class="text-grey w-14 m-auto" />
+            <Icon name="about/volunteer" class="text-grey w-14 m-auto" />
           </div>
           <h3 class="uppercase text-grey text-lg text-center mb-2">
-            information for donors
+            information for volunteers
           </h3>
           <div class="space-y-2">
             <p>

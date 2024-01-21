@@ -89,7 +89,7 @@
           <span>₴</span>
         </div>
       </div>
-      <ActionLink text="Support" :path="fund.slug" size="md" />
+      <ActionLink text="Support" :path="fund.slug" size="md" type="primary" />
     </div>
   </div>
 </template>

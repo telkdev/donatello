@@ -48,7 +48,7 @@ const goals = ref<Goal[]>([
       "Provide information on how users can donate to or support each foundation.",
   },
   {
-    title: "Public awareness",
+    title: "Public Awareness",
     description:
       "Raise awareness about different charitable foundations and their work to attract more donors and volunteers.",
   },
@@ -58,7 +58,7 @@ const goals = ref<Goal[]>([
       "Provide foundations with the opportunity to showcase their work and attract new donors and partners.",
   },
   {
-    title: "Monitoring and reporting",
+    title: "Monitoring and Reporting",
     description:
       "Enable foundations to submit reports on their activities and financial use to donors and the public.",
   },

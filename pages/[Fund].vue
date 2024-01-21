@@ -12,7 +12,7 @@
             :alt="fund.image.data.attributes.alternativeText"
           />
         </div>
-        <div>
+        <div class="w-full">
           <div class="flex items-center gap-2 flex-wrap mb-4 lg:mb-8">
             <ul class="flex items-center flex-wrap gap-2">
               <li
@@ -55,11 +55,9 @@
               </div>
             </div>
 
-            <button
-              title="Share"
-              class="flex items-center justify-center rounded-full w-10 h-10"
-            >
-              <Icon name="share" />
+            <button title="Share" class="flex items-center justify-center gap-1 text-sm">
+              <Icon name="share" class="w-10 h-10 rounded-full" />
+              Share
             </button>
           </div>
         </div>
@@ -75,13 +73,13 @@
         <Table
           :columns="[
             {
-              text: 'Requisite',
+              text: 'Payment Method',
               isLink: false,
               canCopy: false,
               isImage: true,
             },
             {
-              text: 'Number',
+              text: 'Account Number',
               isLink: false,
               canCopy: true,
               isImage: false,

@@ -20,8 +20,8 @@
         <div
           class="flex gap-5 md:gap-8 flex-wrap justify-center md:justify-start"
         >
-          <ActionLink text="Funds List" path="/funds" size="lg" />
-          <ActionLink text="Create fundraiser" path="/create" size="lg" />
+          <ActionLink text="Funds List" path="/funds" size="lg" type="primary" />
+          <ActionLink text="Create fundraiser" path="/create" size="lg" type="secondary" />
         </div>
       </div>
       <div class="flex-grow">
