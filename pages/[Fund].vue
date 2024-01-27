@@ -122,16 +122,18 @@
         </h2>
 
         <ul class="flex flex-wrap">
-          <li v-for="item of 10" class="lg:w-1/2 p-1">
+          <li v-for="item of documents" class="lg:w-1/2 p-1">
             <a
-              href="#"
+              :href="`${runtimeConfig.public.strapiUrl}${item.attributes.url}`"
+              target="_blank"
               class="text-graphic flex gap-2 items-center hover:text-red-800 cursor-pointer"
             >
               <img
                 src="@/assets/icons/pdf.svg"
                 class="w-10 h-10 flex-shrink-0"
+                :alt="item.attributes.alternativeText"
               />
-              платіжна інструкція - Дрони Шарки
+              {{ item.attributes.name }}
             </a>
           </li>
         </ul>
@@ -173,10 +175,13 @@ const { data: strapiFund } = await useAsyncData(async () => {
             },
           },
           document: {
-            fields: ["name", "url", "ext"],
+            fields: ["name", "url", "alternativeText"],
           },
         },
       },
+      documents:{
+        fields: ["name", "url", "alternativeText"],
+      }
     },
     filters: {
       slug: route.params.Fund,
@@ -217,6 +222,12 @@ const requisites = computed(() => {
       documentLink: `${runtimeConfig.public.strapiUrl}${requisite.attributes.document.data.attributes.url}`,
     };
   });
+});
+
+const documents = computed(() => {
+  if (!fund.value) return;
+
+  return fund.value.documents.data
 });
 
 useHead({

@@ -18,6 +18,13 @@ type StrapiCategory = {
   };
 };
 
+type StrapiDocuments = {
+  data: {
+    id: number;
+    attributes: Media;
+  }[];
+};
+
 export type Fund = {
   id: number;
   image: {
@@ -30,6 +37,7 @@ export type Fund = {
   totalGoal: number;
   collectedAmount: number;
   requisites: StrapiRequisite;
+  documents: StrapiDocuments;
   category: StrapiCategory;
   organization: StrapiOrganization;
 };
