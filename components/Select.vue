@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative" v-click-outside="close">
     <button
       class="px-4 md:px-8 py-2 md:py-4 bg-light-grey flex items-center justify-between gap-2 w-full"
       @click="toggle"
@@ -31,6 +31,10 @@ const show = ref(false);
 const toggle = () => {
   show.value = !show.value;
 };
+
+function close() {
+  show.value = false;
+}
 
 const props = defineProps<{
   modelValue: string;
