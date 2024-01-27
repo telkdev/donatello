@@ -34,11 +34,14 @@
 <script lang="ts" setup>
 import type { Fund, Category } from "@/components/funds/types";
 import { useFilteredFundsByCategory } from "./useFilteredFundsByCategory";
+import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 
+const { locale,  defaultLocale } = useI18n();
 const { find } = useStrapi();
 
 const { data: funds } = await useAsyncData(async () => {
   const { data } = await find<Fund>("fund-collections", {
+    locale: (locale.value as unknown as StrapiLocale) || defaultLocale,
     populate: {
       organization: true,
       category: {

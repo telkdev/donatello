@@ -1,14 +1,23 @@
 <template>
   <div class="flex">
-    <ToggleSelect v-model="locale" :values="locales" />
+    <ToggleSelect v-model="locale" :values="availableLocales" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
+const locale = ref();
+const localeCookie = useCookie("locale");
+const {  setLocale, availableLocales } = useI18n();
 
-const { locale } = useI18n();
+onBeforeMount(() => {
+  if (localeCookie.value) {
+    setLocale(localeCookie.value);
+  }
+});
 
-// should be from useI18n(), but it's not working in current version, need @nuxtjs/i18n-edge@8.0.0-beta.4-27816734.493bb8f (https://github.com/nuxt-modules/i18n/issues/1659)
-const locales = ["en", "ua"];
+watch(locale, (value, oldValue) => {
+  setLocale(value);
+  localeCookie.value = value;
+});
 </script>

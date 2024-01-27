@@ -55,7 +55,10 @@
               </div>
             </div>
 
-            <button title="Share" class="flex items-center justify-center gap-1 text-sm">
+            <button
+              title="Share"
+              class="flex items-center justify-center gap-1 text-sm"
+            >
               <Icon name="share" class="w-10 h-10 rounded-full" />
               Share
             </button>
@@ -143,16 +146,20 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
 import type { Fund } from "~/components/funds/types";
 import { useMediaQuery } from "@vueuse/core";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
+import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 
+const { locale, defaultLocale } = useI18n();
 const { find } = useStrapi();
 const route = useRoute();
 
 // TODO: check what fields are needed
 const { data: strapiFund } = await useAsyncData(async () => {
   const { data } = await find<Fund>("fund-collections", {
+    locale: (locale.value as unknown as StrapiLocale) || defaultLocale,
     populate: {
       organization: true,
       category: {
@@ -179,9 +186,9 @@ const { data: strapiFund } = await useAsyncData(async () => {
           },
         },
       },
-      documents:{
+      documents: {
         fields: ["name", "url", "alternativeText"],
-      }
+      },
     },
     filters: {
       slug: route.params.Fund,
@@ -227,7 +234,7 @@ const requisites = computed(() => {
 const documents = computed(() => {
   if (!fund.value) return;
 
-  return fund.value.documents.data
+  return fund.value.documents.data;
 });
 
 useHead({

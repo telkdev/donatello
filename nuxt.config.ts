@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     url: STRAPI_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
   },
   i18n: {
+    defaultLocale: "uk",
     vueI18n: "./i18n/i18n.config.ts", // if you are using custom path, default
   },
   runtimeConfig: {
