@@ -1,11 +1,9 @@
 <template>
-  <li
-    class="group cursor-pointer p-2 lg:py-5 lg:px-12 border border-graphic"
-    @click="toggle"
-  >
+  <li class="group p-2 lg:py-5 lg:px-12 border border-graphic">
     <div
       class="flex gap-3 justify-between items-center cursor-pointer"
       :class="{ 'underline-gradient--active': isOpened }"
+      @click="toggle"
     >
       <div
         v-html="questionItem.question"
@@ -18,7 +16,7 @@
     </div>
     <div
       class="text-sm md:text-lg font-extralight leading-tight transform transition-all duration-500"
-      :class="[isOpened ? 'opacity-100 max-h-56 mt-5' : 'opacity-0 max-h-0']"
+      :class="[isOpened ? 'opacity-100 max-h-96 mt-5' : 'opacity-0 max-h-0']"
       v-html="questionItem.answer"
     />
   </li>
