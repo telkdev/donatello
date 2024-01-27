@@ -1,20 +1,8 @@
 <template>
-  <section class="py-16">
-    <div class="container">
-      <h2
-        class="text-2xl md:text-4xl uppercase pb-10 border-b border-graphic mb-14 text-graphic"
-      >
-        Frequently asked questions about funds and how to do stuff
-      </h2>
-      <ul class="space-y-4">
-        <FaqQustionAnswer v-for="item of faq" :question-item="item" />
-      </ul>
-    </div>
-  </section>
+  <FaqListWithTitle :faq="faq" />
 </template>
 
 <script lang="ts" setup>
-// TODO: use from backend
 const faq = [
   {
     question: "How  to create a charity fundraiser?",
@@ -79,15 +67,13 @@ const faq = [
       "Almost any topic or project can be supported through a charity fundraiser: supporting the military, medical needs, humanitarian aid, etc.",
   },
   {
-    question:
-      "How to make a donation?",
-    answer:
-      `To make a donation, there is a table listing all possible payment methods for the specific fundraiser. <br/>
+    question: "How to make a donation?",
+    answer: `To make a donation, there is a table listing all possible payment methods for the specific fundraiser. <br/>
        To complete the payment, choose a method that suits you. <br/>
        There is a button in the table allowing you to copy the payment details. <br/>
        After copying, visit your bank's website or app, log into your account with your identification login and password. <br/>
        In the "payments" or "transfers" section, enter the recipient's details or account number that you copied from the table. <br/>
-       Verify the recipient's information beforehand and make your charitable contribution. <br/>`
+       Verify the recipient's information beforehand and make your charitable contribution. <br/>`,
   },
   {
     question: "How to choose a trustworthy fundraiser?",
