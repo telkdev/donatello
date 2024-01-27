@@ -4,12 +4,14 @@
       <div
         class="hidden lg:block mr-8 border border-graphic flex-shrink-0 w-32 h-32"
       >
-        <Image
-          :path="fund.image.data.attributes.url"
-          class="object-cover h-full"
-          :aria-hidden="!isDesktop"
-          :alt="fund.image.data.attributes.alternativeText"
-        />
+        <NuxtLink :to="fund.slug" :aria-label="fund.title">
+          <Image
+            :path="fund.image.data.attributes.url"
+            class="object-cover h-full"
+            :aria-hidden="!isDesktop"
+            :alt="fund.image.data.attributes.alternativeText"
+          />
+        </NuxtLink>
       </div>
       <div class="lg:flex-grow">
         <div class="flex justify-between items-center mb-5">
@@ -50,15 +52,19 @@
           </button>
         </div>
         <div class="lg:hidden border border-graphic mb-5">
-          <Image
-            :path="fund.image.data.attributes.url"
-            class="w-full object-cover"
-            :aria-hidden="isDesktop"
-            :alt="fund.image.data.attributes.alternativeText"
-          />
+          <NuxtLink :to="fund.slug" :aria-label="fund.title">
+            <Image
+              :path="fund.image.data.attributes.url"
+              class="w-full object-cover"
+              :aria-hidden="isDesktop"
+              :alt="fund.image.data.attributes.alternativeText"
+            />
+          </NuxtLink>
         </div>
         <h2 class="text-xl text-graphic mb-5">
-          {{ fund.title }}
+          <NuxtLink :to="fund.slug" class="hover:text-red-800">
+            {{ fund.title }}
+          </NuxtLink>
         </h2>
 
         <h3 class="text-sm text-grey uppercase">
