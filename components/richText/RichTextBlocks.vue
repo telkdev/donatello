@@ -47,7 +47,7 @@ function renderText(children: RichTextBlockChild[]) {
 </script>
 
 <template>
-  <div class="prose prose-slate prose-a:text-blue-600">
+  <div class="prose prose-slate prose-a:text-blue-600 max-w-none">
     <template v-for="(block, index) in data" :key="index">
       <!-- Paragraph -->
       <p v-if="block && block.type === RichTextBlockType.paragraph">
