@@ -49,4 +49,5 @@ export default defineNuxtConfig({
       logo: "https://example.com/logo.png",
     },
   },
+  plugins: ["~/plugins/locales.ts"],
 });
