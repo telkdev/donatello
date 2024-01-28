@@ -1,5 +1,5 @@
 <template>
-  <header class=" bg-white ">
+  <header class="bg-white">
     <div
       class="flex items-center justify-between gap-2 container py-5 md:py-12"
     >

@@ -146,7 +146,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from "vue-i18n";
 import type { Fund } from "~/components/funds/types";
 import { useMediaQuery } from "@vueuse/core";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
@@ -232,7 +231,7 @@ const requisites = computed(() => {
 });
 
 const documents = computed(() => {
-  if (!fund.value) return;
+  if (!fund.value || !fund.value.documents) return [];
 
   return fund.value.documents.data;
 });

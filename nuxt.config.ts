@@ -22,13 +22,12 @@ export default defineNuxtConfig({
       ["defineStore", "definePiniaStore"], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
-  // https://strapi.nuxtjs.org/setup
+  // https://strapi.nuxtjs.https://pinia.vuejs.org/core-concepts/org/setup
   strapi: {
     url: STRAPI_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
   },
   i18n: {
-    defaultLocale: "uk",
-    vueI18n: "./i18n/i18n.config.ts", // if you are using custom path, default
+    vueI18n: "./i18n/i18n.config.ts",
   },
   runtimeConfig: {
     public: {
