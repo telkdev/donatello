@@ -36,12 +36,23 @@ import type { Fund, Category } from "@/components/funds/types";
 import { useFilteredFundsByCategory } from "./useFilteredFundsByCategory";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 
-const { locale,  defaultLocale } = useI18n();
+const { locale, defaultLocale } = useI18n();
 const { find } = useStrapi();
 
-const { data: funds } = await useAsyncData(async () => {
+const fundsWithLocale = ref<Fund[]>([]);
+
+watch(locale, async (locale) => {
+  fundsWithLocale.value = await fetchFunds(locale);
+});
+
+const { localeFromCookie } = useLocalesFromCookie();
+
+const fetchFunds = async (locale?: string) => {
   const { data } = await find<Fund>("fund-collections", {
-    locale: (locale.value as unknown as StrapiLocale) || defaultLocale,
+    locale:
+      locale ||
+      (localeFromCookie.value as unknown as StrapiLocale) ||
+      defaultLocale,
     populate: {
       organization: true,
       category: {
@@ -72,6 +83,10 @@ const { data: funds } = await useAsyncData(async () => {
   });
 
   return fundWithId;
+};
+
+const { data: funds } = await useAsyncData(async () => {
+  return await fetchFunds();
 });
 
 const { data: categories } = await useAsyncData(async () => {
@@ -88,6 +103,10 @@ const categoriesOptions = computed(() => [
     []),
 ]);
 
+const currentFunds = computed(() =>
+  fundsWithLocale.value.length ? fundsWithLocale.value : funds.value
+);
+
 const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
-  useFilteredFundsByCategory(funds);
+  useFilteredFundsByCategory(currentFunds);
 </script>
