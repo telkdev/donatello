@@ -4,7 +4,7 @@
       <h2
         class="text-2xl md:text-4xl uppercase pb-10 border-b border-graphic mb-14 text-graphic"
       >
-        Our main goals
+        {{ t("Main.Goals.Title") }}
       </h2>
       <ul class="grid md:grid-cols-2 gap-10">
         <li
@@ -26,43 +26,41 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
+
 type Goal = {
   title: string;
   description: string;
 };
 
-const goals = ref<Goal[]>([
+const { t } = useI18n();
+
+const goals = computed<Goal[]>(()=>([
   {
-    title: "Convenient Access to Information",
-    description:
-      "Provide convenient access to information about various charitable foundations, including their missions, goals, programs, and contact information.",
+    title: t("Main.Goals.Goals.First.Title"),
+    description: t("Main.Goals.Goals.First.Description"),
   },
   {
-    title: "Search and Filtering",
-    description:
-      "Enable users to search and filter foundations based on various criteria. this helps users find foundations that meet their specific needs.",
+    title: t("Main.Goals.Goals.Second.Title"),
+    description: t("Main.Goals.Goals.Second.Description"),
   },
   {
-    title: "Support for Charitable Actions",
-    description:
-      "Provide information on how users can donate to or support each foundation.",
+    title: t("Main.Goals.Goals.Third.Title"),
+    description: t("Main.Goals.Goals.Third.Description"),
   },
   {
-    title: "Public Awareness",
-    description:
-      "Raise awareness about different charitable foundations and their work to attract more donors and volunteers.",
+    title: t("Main.Goals.Goals.Fourth.Title"),
+    description: t("Main.Goals.Goals.Fourth.Description"),
   },
   {
-    title: "Support for Foundations",
-    description:
-      "Provide foundations with the opportunity to showcase their work and attract new donors and partners.",
+    title: t("Main.Goals.Goals.Fifth.Title"),
+    description: t("Main.Goals.Goals.Fifth.Description"),
   },
   {
-    title: "Monitoring and Reporting",
-    description:
-      "Enable foundations to submit reports on their activities and financial use to donors and the public.",
+    title: t("Main.Goals.Goals.Sixth.Title"),
+    description: t("Main.Goals.Goals.Sixth.Description"),
   },
-]);
+]));
 
 function addIndex(index: number) {
   if (index < 10) {

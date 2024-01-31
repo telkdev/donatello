@@ -15,18 +15,37 @@
         :class="[isOpened ? 'rotate-180' : 'rotate-0  ']"
       />
     </div>
-    <div
+    <ul
+      v-if="isAnswerArray(questionItem.answer)"
       class="text-sm md:text-lg font-extralight leading-tight transform transition-all duration-500"
-      :class="[isOpened ? 'opacity-100 max-h-96 mt-5' : 'opacity-0 max-h-0 overflow-hidden']"
+      :class="[
+        isOpened
+          ? 'opacity-100 max-h-96 mt-5'
+          : 'opacity-0 max-h-0 overflow-hidden',
+      ]"
+    >
+      <li v-for="item of questionItem.answer">
+        {{ item }}
+      </li>
+    </ul>
+    <div
+      v-else
+      class="text-sm md:text-lg font-extralight leading-tight transform transition-all duration-500"
+      :class="[
+        isOpened
+          ? 'opacity-100 max-h-96 mt-5'
+          : 'opacity-0 max-h-0 overflow-hidden',
+      ]"
       v-html="questionItem.answer"
     />
   </li>
 </template>
 
 <script lang="ts" setup>
+// TODO: remove v-html, use conditions
 export type QuestionWithAnswer = {
   question: string;
-  answer: string;
+  answer: string | string[];
 };
 
 defineProps<{
@@ -37,5 +56,9 @@ const isOpened = ref(false);
 
 function toggle() {
   isOpened.value = !isOpened.value;
+}
+
+function isAnswerArray(answer: string | string[]): answer is string[] {
+  return Array.isArray(answer);
 }
 </script>

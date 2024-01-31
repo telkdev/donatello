@@ -5,29 +5,27 @@
     >
       <div class="space-y-5 md:space-y-12 flex-grow">
         <h1 class="text-4xl md:text-6xl uppercase font-bold text-graphic">
-          {{ t("welcome") }}
+          {{ t("Main.Hero.Title") }}
         </h1>
         <div class="space-y-4">
           <p class="text-lg">
-            here you will find a list of all charitable organizations, if you
-            wish to make a charitable contribution.
+            {{ t("Main.Hero.Description.Contribution") }}
           </p>
           <p class="text-lg">
-            if you are a volunteer or you have your own charitable foundation,
-            You can create your own fundraiser here.
+            {{ t("Main.Hero.Description.CreateFundraiser") }}
           </p>
         </div>
         <div
           class="flex gap-5 md:gap-8 flex-wrap justify-center md:justify-start"
         >
           <ActionLink
-            text="Funds List"
+            :text="t('Main.Hero.ActionLinks.Funds')"
             path="/funds"
             size="lg"
             type="primary"
           />
           <ActionLink
-            text="Create fundraiser"
+            :text="t('Main.Hero.ActionLinks.CreateFundraiser')"
             path="/create"
             size="lg"
             type="secondary"
@@ -39,7 +37,7 @@
           src="/images/map.webp"
           width="530"
           height="374"
-          alt="Map of Ukraine"
+          :alt="t('Main.Hero.Image.Description')"
         />
       </div>
     </div>

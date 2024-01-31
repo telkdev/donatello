@@ -1,1 +1,160 @@
-{ "welcome": "help army - help ukraine" }
+{
+  "Main": {
+    "Hero": {
+      "Title": "Help army - help Ukraine",
+      "Description": {
+        "Contribution": "Here you will find a list of all charitable organizations, if you wish to make a charitable contribution.",
+        "CreateFundraiser": "If you are a volunteer or you have your own charitable foundation, you can create your own fundraiser here."
+      },
+      "ActionLinks": {
+        "Funds": "Funds List",
+        "CreateFundraiser": "Create Fundraiser"
+      },
+      "Image": {
+        "Description": "Map of Ukraine"
+      }
+    },
+    "About": {
+      "Title": "About our service",
+      "Description": "Our service provides a convenient list of charitable organizations for individuals who wish to make donations or get involved in volunteer initiatives. With us, you can easily find and support charitable organizations that interest you and learn more about their activities. We are maintain the accuracy of data about charitable organizations and verify their activities to ensure credibility.",
+      "Information": {
+        "Description": "To make a charitable contribution, you need to:",
+        "Donors": {
+          "Title": "Information for donors",
+          "Steps": {
+            "First": "Choose a charitable organization from the list",
+            "Second": "In the payment methods table, you can find a PDF file. By opening it, you can verify the personal documents of the individual or organization creating the fundraiser",
+            "Third": "In the payment methods table, choose the method that suits you best and copy the account details",
+            "Fourth": "Visit the website or use the app of your bank, and log in to your personal account using your identification login and password",
+            "Fifth": "Enter the recipient's details or the account number that you copied from the payment method table",
+            "Sixth": "Verify the recipient's information beforehand and proceed to make your charitable contribution",
+            "Seventh": "You also have the option to share a specific fundraiser on your social networks by copying its link to help promote and close the campaign"
+          }
+        },
+        "Volunteers": {
+          "Title": "Information for volunteers",
+          "Steps": {
+            "First": "Confirm your identity by submitting all necessary documents",
+            "Second": "Provide a clear description of what the collected funds will be used for",
+            "Third": "Specify the specific amount you intend to raise",
+            "Fourth": "Provide information about the timeframe during which you are accepting donations",
+            "Fifth": "Include information on how individuals can make donations (bank transfer, online payments, or other methods)",
+            "Sixth": "Explain how the collected funds will be utilized and provide transparency",
+            "Seventh": "Provide contact information for donors who wish to receive additional information or ask questions"
+          }
+        }
+      }
+    },
+    "Goals": {
+      "Title": "Our main goals",
+      "Goals": {
+        "First": {
+          "Title": "Convenient access to information",
+          "Description": "Provide convenient access to information about various charitable foundations, including their missions, goals, programs, and contact information."
+        },
+        "Second": {
+          "Title": "Search and filtering",
+          "Description": "Enable users to search and filter foundations based on various criteria. This helps users find foundations that meet their specific needs."
+        },
+        "Third": {
+          "Title": "Support for charitable actions",
+          "Description": "Provide information on how users can donate to or support each foundation."
+        },
+        "Fourth": {
+          "Title": "Public awareness",
+          "Description": "Raise awareness about different charitable foundations and their work to attract more donors and volunteers."
+        },
+        "Fifth": {
+          "Title": "Support for foundations",
+          "Description": "Provide foundations with the opportunity to showcase their work and attract new donors and partners."
+        },
+        "Sixth": {
+          "Title": "Monitoring and reporting",
+          "Description": "Enable foundations to submit reports on their activities and financial use to donors and the public."
+        }
+      }
+    },
+    "FAQ": {
+      "Title": "@:FAQ.Title",
+      "List": {
+        "First": {
+          "Question": "How  to create a charity fundraiser?",
+          "Answer":  "Click on the 'Create Fundraiser' button, fill in the necessary fields, and add information about your charity project. There are mandatory requirements for creating a charity fundraiser. We recommend providing maximum information to attract more donations."
+        },
+        "Second": {
+          "Question": "Who can create a charity fundraiser?",
+          "Answer": "Anyone who has an interest or a need to raise funds to support a specific project, individual, or initiative can create a charity fundraiser. individuals are also able to create charity fundraisers for various needs or projects that interest them."
+        },
+        "Third": {
+          "Question": "Do you need to be an official charitable organization?",
+          "Answer": "No, creating a charity fundraiser does not require official charitable organization status. It is open to individuals, groups, teams, and non-profit organizations."
+        },
+        "Fourth": {
+          "Question": "What is needed to create a fundraiser?",
+          "Answer": {
+            "First": "confirm your identity by providing all necessary documents",
+            "Second": "add a clear description of the purpose for which the raised funds will be used",
+            "Third": "specify the exact amount you aim to raise",
+            "Fourth": "provide information about the duration during which you will be accepting donations",
+            "Fifth": "add details on how people can make donations (bank transfers, online payments, other methods)",
+            "Sixth": "explain how the raised funds will be utilized and ensure transparency",
+            "Seventh": "provide contact information for donors who want additional information or have questions",
+            "Eighth": "include links to social media and, possibly, any ratings where reviews about your organization or previous fundraisers can be found",
+            "Ninth": "if there are any incentives or acknowledgments for donors, mention them"
+          }
+        },
+        "Fifth": {
+          "Question": "How long does the approval process for a charity fundraiser take?",
+          "Answer": "Typically, the approval process can take from a few hours to several days. We strive to process all applications as quickly as possible."
+        },
+        "Sixth": {
+          "Question": "Are there limitations on the duration and amount of funds for a charity fundraiser?",
+          "Answer": "No, there are no limitations. You can set your own timelines and fundraising goals."
+        },
+        "Seventh": {
+          "Question": "Can you edit or update information after creating a charity fundraiser?",
+          "Answer": "Yes, you can edit and update information about your charity fundraiser in your personal account on our website."
+        },
+        "Eighth": {
+          "Question": "Can fundraisers be created for any purpose?",
+          "Answer": "Yes, you can create a charity fundraiser for any purpose you define. It's crucial to specify the goal and use of the funds."
+        },
+        "Ninth": {
+          "Question": "What are the advantages of creating a charity fundraiser through this platform?",
+          "Answer": "This platform provides a convenient interface, access to users, and tools for promoting your charity fundraiser."
+        },
+        "Tenth": {
+          "Question": "What topics or projects can be supported through a charity fundraiser?",
+          "Answer": "Almost any topic or project can be supported through a charity fundraiser: supporting the military, medical needs, humanitarian aid, etc."
+        },
+        "Eleventh": {
+          "Question": "How to make a donation?",
+          "Answer": {
+            "First": "Choose a charity fundraiser from the list",
+            "Second": "In the payment methods table, you can find a PDF file. By opening it, you can verify the personal documents of the individual or organization creating the fundraiser",
+            "Third": "In the payment methods table, choose the method that suits you best and copy the account details",
+            "Fourth": "Visit the website or use the app of your bank, and log in to your personal account",
+            "Fifth": "In the 'payments' or 'transfers' section, enter the recipient's details or account number that you copied from the table",
+            "Sixth": "Verify the recipient's information beforehand and make your charitable contribution",
+            "Seventh": "You also have the option to share a specific fundraiser on your social networks by copying its link to help promote and close the campaign"
+          }
+        },
+        "Twelfth": {
+          "Question": "How to choose a trustworthy fundraiser?",
+          "Answer": "To verify the reliability of a charity fundraiser, the person or organization conducting the fundraiser should attach personal documents. These documents can be viewed in the payment methods table as a PDF file. Additionally, each fundraiser should have attached documents and reports proving its reliability.."
+        },
+        "Thirteenth": {
+          "Question": "How much money is it not embarrassing to donate?",
+          "Answer": "There is no amount that should cause embarrassment. One hryvnia is already a significant contribution that brings us closer to the goal. Therefore, every contribution is valuable and important. If you can afford to give more – that's great. But the final decision is yours, and any help is crucial!"
+        },
+        "Fourteenth": {
+          "Question": "How to promote the fundraiser?",
+          "Answer": "To promote the fundraiser, there is a button that allows you to copy the link to the fundraiser. This way, you can share the link on any of your social media platforms or simply forward it to people you know. Remember that spreading the word about fundraisers is crucial and accelerates progress towards the goal."
+        }
+      }
+    }
+  },
+  "FAQ": {
+    "Title": "Frequency asked questions"
+  }
+}
