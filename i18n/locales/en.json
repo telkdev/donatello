@@ -1,4 +1,22 @@
 {
+  "Header": {
+    "Home": "Home page",
+    "Menu": {
+      "Open": "Open menu"
+    }
+  },
+  "Footer": {
+    "Copyright": "©2024 UA Funds. All Rigts Reserved.",
+    "Links": {
+      "Terms": "Terms of Use",
+      "Privacy": "Privacy Policy"
+    }
+  },
+  "Navigation": {
+    "Home": "Home",
+    "About": "About",
+    "Funds": "Funds"
+  },
   "Main": {
     "Hero": {
       "Title": "Help army - help Ukraine",
@@ -79,7 +97,7 @@
       "List": {
         "First": {
           "Question": "How  to create a charity fundraiser?",
-          "Answer":  "Click on the 'Create Fundraiser' button, fill in the necessary fields, and add information about your charity project. There are mandatory requirements for creating a charity fundraiser. We recommend providing maximum information to attract more donations."
+          "Answer": "Click on the 'Create Fundraiser' button, fill in the necessary fields, and add information about your charity project. There are mandatory requirements for creating a charity fundraiser. We recommend providing maximum information to attract more donations."
         },
         "Second": {
           "Question": "Who can create a charity fundraiser?",

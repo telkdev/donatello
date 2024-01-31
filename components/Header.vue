@@ -3,7 +3,7 @@
     <div
       class="flex items-center justify-between gap-2 container py-5 md:py-12"
     >
-      <NuxtLink to="/" aria-label="Home page">
+      <NuxtLink to="/" :aria-label="t('Header.Home')">
         <Logo />
       </NuxtLink>
 
@@ -11,7 +11,7 @@
         v-if="!isMenuOpen"
         @click="openMenu"
         class="flex md:hidden w-10 h-5"
-        aria-label="Open menu"
+        :aria-label="t('Header.Menu.Open')"
       >
         <Icon name="burger" class="w-full h-full" />
       </button>
@@ -24,6 +24,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const { isMenuOpen, openMenu, closeMenu } = useMenu();
 
 function useMenu() {

@@ -7,9 +7,9 @@
       <p class="text-lg mb-10 md:mb-16 text-center">
         {{ t("Main.About.Description") }}
       </p>
-      <ul class="flex gap-20 md:gap-10 flex-col md:flex-row pt-10">
+      <ul class="flex gap-20 md:gap-10 flex-col xl:flex-row pt-10">
         <li
-          class="relative border border-graphic pt-20 pb-5 px-2 w-1/2 shrink-0"
+          class="relative border border-graphic pt-20 pb-5 px-2 xl:w-1/2 shrink-0"
         >
           <div
             class="w-28 h-28 flex rounded-full border border-graphic absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white"
@@ -48,7 +48,7 @@
         </li>
 
         <li
-          class="relative border border-graphic pt-20 pb-5 px-2 w-1/2 shrink-0"
+          class="relative border border-graphic pt-20 pb-5 px-2 xl:w-1/2 shrink-0"
         >
           <div
             class="w-28 h-28 flex rounded-full border border-graphic absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-white"

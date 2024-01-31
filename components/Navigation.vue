@@ -16,17 +16,21 @@
 </template>
 
 <script lang="ts" setup>
-const navigation = ref([
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
+const navigation = computed(() => [
   {
-    name: "Home",
+    name: t("Navigation.Home"),
     path: "/",
   },
   {
-    name: "About",
+    name: t("Navigation.About"),
     path: "/about",
   },
   {
-    name: "Funds",
+    name: t("Navigation.Funds"),
     path: "/funds",
   },
 ]);

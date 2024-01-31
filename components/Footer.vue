@@ -11,16 +11,24 @@
         <Socials />
       </div>
       <div class="flex items-center flex-wrap gap-1 justify-center">
-        <span>©2023 UA Funds. All Rigts Reserved.</span>
+        <span>{{ t('Footer.Copyright') }}</span>
         <ul class="flex items-center gap-1">
           <li>
-            <RouterLink to="/privacy-policy"> Privacy Policy. </RouterLink>
+            <RouterLink to="/privacy-policy"> {{ t('Footer.Links.Privacy') }}. </RouterLink>
           </li>
           <li>
-            <RouterLink to="/terms-conditions"> Terms Conditions </RouterLink>
+            <RouterLink to="/terms-conditions"> {{ t('Footer.Links.Terms') }} </RouterLink>
           </li>
         </ul>
       </div>
     </div>
   </footer>
 </template>
+
+<script lang="ts" setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
+
+</script>
