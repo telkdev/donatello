@@ -34,6 +34,10 @@ export type Fund = {
   slug: string;
   description: RichTextBlocks[];
   createdAt: string;
+  locale: string; // TODO: add as const
+  localizations: {
+    data: WithStrapiStructure<Fund>[];
+  }
   totalGoal: number;
   collectedAmount: number;
   requisites: StrapiRequisite;

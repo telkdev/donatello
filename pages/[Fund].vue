@@ -6,6 +6,7 @@
           class="hidden lg:block mr-8 border border-graphic flex-shrink-0 max-w-[400px] w-full"
         >
           <Image
+            v-if="fund.image"
             :path="fund.image.data.attributes.url"
             class="object-cover h-full"
             :aria-hidden="!isDesktop"
@@ -16,6 +17,7 @@
           <div class="flex items-center gap-2 flex-wrap mb-4 lg:mb-8">
             <ul class="flex items-center flex-wrap gap-2">
               <li
+                v-if="fund.category"
                 class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
               >
                 <Image
@@ -28,10 +30,11 @@
               </li>
             </ul>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
-            <span class="text-xs">{{ fundCreatedAt }}</span>
+            <span class="text-xs">{{ fundCreationDate }}</span>
           </div>
           <div class="lg:hidden border border-graphic mb-5">
             <Image
+              v-if="fund.image"
               :path="fund.image.data.attributes.url"
               class="w-full object-cover"
               :aria-hidden="isDesktop"
@@ -42,6 +45,7 @@
             {{ fund.title }}
           </h1>
           <span
+            v-if="fund.organization"
             class="block text-sm lg:text-lg mb-5 lg:mb-10 text-grey uppercase"
           >
             {{ fund.organization.data.attributes.name }}
@@ -154,11 +158,43 @@ import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 const { locale, defaultLocale } = useI18n();
 const { find } = useStrapi();
 const route = useRoute();
+const router = useRouter();
+
+// const fundByLocale = ref<Fund>();
+
+watch(locale, async (locale) => {
+  const initialFundLocale = fundFromBackend.value?.attributes.locale;
+
+  if (!initialFundLocale) return;
+
+  if (initialFundLocale === locale) {
+    return;
+  }
+
+  const localizedFund = fund.value?.localizations?.data.find(
+    (localization) => localization.attributes.locale === locale
+  );
+
+  if (!localizedFund) return;
+
+  // option 1 just redirect - but it is extra request
+  router.push({
+    path: `/${localizedFund.attributes.slug}`,
+  });
+
+  // option 2 change url with histore, add extra ref and populate more 
+  // history.pushState({}, "", `/${localizedFund.attributes.slug}`);
+
+  // fundByLocale.value = fromStrapiDataStracrture(localizedFund);
+});
+
+const { localeFromCookie } = useLocalesFromCookie();
 
 // TODO: check what fields are needed
-const { data: strapiFund } = await useAsyncData(async () => {
+const { data: fundFromBackend } = await useAsyncData(async () => {
   const { data } = await find<Fund>("fund-collections", {
-    locale: (locale.value as unknown as StrapiLocale) || defaultLocale,
+    locale:
+      (localeFromCookie.value as unknown as StrapiLocale) || defaultLocale,
     populate: {
       organization: true,
       category: {
@@ -188,6 +224,39 @@ const { data: strapiFund } = await useAsyncData(async () => {
       documents: {
         fields: ["name", "url", "alternativeText"],
       },
+      localizations: {
+        populate: {
+          organization: true,
+          category: {
+            populate: {
+              icon: {
+                fields: ["name", "url"],
+              },
+            },
+          },
+          image: {
+            fields: ["alternativeText", "url"],
+          },
+          requisites: {
+            populate: {
+              requisite_type: {
+                populate: {
+                  icon: {
+                    fields: ["alternativeText", "url"],
+                  },
+                },
+              },
+              document: {
+                fields: ["name", "url", "alternativeText"],
+              },
+            },
+          },
+          documents: {
+            fields: ["name", "url", "alternativeText"],
+          },
+          localizations: true,
+        },
+      },
     },
     filters: {
       slug: route.params.Fund,
@@ -199,13 +268,13 @@ const { data: strapiFund } = await useAsyncData(async () => {
 });
 
 const fund = computed(() => {
-  if (!strapiFund.value) return;
-  return fromStrapiDataStracrture(strapiFund.value);
+  if (!fundFromBackend.value) return;
+  return fromStrapiDataStracrture(fundFromBackend.value);
 });
 
 const isDesktop = useMediaQuery("(min-width: 1024px)");
 
-const fundCreatedAt = computed(() => {
+const fundCreationDate = computed(() => {
   if (!fund.value) return;
   const date = new Date(fund.value.createdAt);
   return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
@@ -214,7 +283,7 @@ const fundCreatedAt = computed(() => {
 const runtimeConfig = useRuntimeConfig();
 
 const requisites = computed(() => {
-  if (!fund.value) return;
+  if (!fund.value || !fund.value.requisites) return [];
 
   return fund.value.requisites.data.map((requisite) => {
     return {
