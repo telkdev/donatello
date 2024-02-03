@@ -7,7 +7,7 @@
       >
         <div class="md:col-span-3">
           <div class="flex items-center gap-2 flex-wrap justify-between mb-12">
-            <h1 class="text-2xl text-grey uppercase">Funds</h1>
+            <h1 class="text-2xl text-grey uppercase">{{ t("Funds.Title") }}</h1>
             <Select
               v-model="selectedCategory"
               :options="categoriesOptions"
@@ -20,7 +20,7 @@
               <FundsListEntry :fund="fund" />
             </li>
           </ul>
-          <div v-else>No funds found</div>
+          <div v-else>{{ t("Funds.NoFunds") }}</div>
         </div>
         <aside class="mt-2 space-y-10 md:space-y-16">
           <!-- <AsidesClosestToCompleteFunds :funds="funds || []" /> -->
@@ -36,7 +36,7 @@ import type { Fund, Category } from "@/components/funds/types";
 import { useFilteredFundsByCategory } from "./useFilteredFundsByCategory";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 
-const { locale, defaultLocale } = useI18n();
+const { locale, defaultLocale, t } = useI18n();
 const { find } = useStrapi();
 
 const fundsWithLocale = ref<Fund[]>([]);

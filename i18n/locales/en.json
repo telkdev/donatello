@@ -206,5 +206,25 @@
         }
       }
     }
+  },
+  "Funds": {
+    "Title": "Funds",
+    "NoFunds": "No funds found"
+  },
+  "Fund": {
+    "TotalGoal": "Total goal",
+    "Currency": "₴",
+    "Share": "Share",
+    "PaymentMethods": {
+      "Title": "Payment methods",
+      "Table": {
+        "PaymentMethod": "Payment method",
+        "AccountNumber": "Account number",
+        "Owner": "Owner",
+        "Document": "Document"
+      }
+    },
+    "About": "About project",
+    "Documents": "Reports and documents"
   }
 }

@@ -52,10 +52,12 @@
           </span>
           <div class="flex items-center justify-between gap-2">
             <div class="mb-2 lg:mb-0">
-              <span class="block uppercase mb-1 lg:text-lg">total goal</span>
+              <span class="block uppercase mb-1 lg:text-lg">{{
+                t("Fund.TotalGoal")
+              }}</span>
               <div>
                 <span class="text-lg lg:text-3xl"> {{ fund.totalGoal }} </span>
-                <span class="lg:text-lg">₴</span>
+                <span class="lg:text-lg">{{ t("Fund.Currency") }}</span>
               </div>
             </div>
 
@@ -64,7 +66,7 @@
               class="flex items-center justify-center gap-1 text-sm"
             >
               <Icon name="share" class="w-10 h-10 rounded-full" />
-              Share
+              {{ t("Fund.Share") }}
             </button>
           </div>
         </div>
@@ -74,31 +76,31 @@
         <h2
           class="lg:text-xl uppercase pb-3 lg:pb-6 border-b border-graphic mb-5 lg:mb-8 text-graphic"
         >
-          payment methods
+          {{ t("Fund.PaymentMethods") }}
         </h2>
 
         <Table
           :columns="[
             {
-              text: 'Payment Method',
+              text: t('Fund.PaymentMethods.Table.PaymentMethod'),
               isLink: false,
               canCopy: false,
               isImage: true,
             },
             {
-              text: 'Account Number',
+              text: t('Fund.PaymentMethods.Table.AccountNumber'),
               isLink: false,
               canCopy: true,
               isImage: false,
             },
             {
-              text: 'Owner',
+              text: t('Fund.PaymentMethods.Table.Owner'),
               isLink: false,
               canCopy: false,
               isImage: false,
             },
             {
-              text: 'Document',
+              text: t('Fund.PaymentMethods.Table.Document'),
               isLink: true,
               canCopy: false,
               isImage: false,
@@ -116,7 +118,7 @@
         <h2
           class="lg:text-xl uppercase pb-3 lg:pb-6 border-b border-graphic mb-5 lg:mb-8 text-graphic"
         >
-          About project
+          {{ t("Fund.About") }}
         </h2>
 
         <RichTextBlocks :data="fund?.description" class="mb-6" />
@@ -125,7 +127,7 @@
         <h2
           class="lg:text-xl uppercase pb-3 lg:pb-6 border-b border-graphic mb-5 lg:mb-8 text-graphic"
         >
-          Reports and documents
+          {{ t("Fund.Documents") }}
         </h2>
 
         <ul class="flex flex-wrap">
@@ -155,7 +157,7 @@ import { useMediaQuery } from "@vueuse/core";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 
-const { locale, defaultLocale } = useI18n();
+const { locale, defaultLocale, t } = useI18n();
 const { find } = useStrapi();
 const route = useRoute();
 const router = useRouter();
@@ -182,7 +184,7 @@ watch(locale, async (locale) => {
     path: `/${localizedFund.attributes.slug}`,
   });
 
-  // option 2 change url with histore, add extra ref and populate more 
+  // option 2 change url with histore, add extra ref and populate more
   // history.pushState({}, "", `/${localizedFund.attributes.slug}`);
 
   // fundByLocale.value = fromStrapiDataStracrture(localizedFund);
