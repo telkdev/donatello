@@ -17,7 +17,7 @@
               <FundsListEntry :fund="fund" />
             </li>
           </ul>
-          <div v-else>No funds found</div>
+          <div v-else>{{ t("Funds.NoFunds") }}</div>
         </div>
         <aside class="mt-2 space-y-10 md:space-y-16">
           <!-- <AsidesClosestToCompleteFunds :funds="funds || []" /> -->
@@ -29,15 +29,29 @@
 </template>
 
 <script lang="ts" setup>
-import type { Fund, Category } from "@/components/funds/types";
+import type { Fund } from "@/components/funds/types";
 import { useFilteredFundsByCategory } from "../useFilteredFundsByCategory";
+import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 
 const route = useRoute();
 
+const { locale, defaultLocale, t } = useI18n();
+const { localeFromCookie } = useLocalesFromCookie();
+
 const { find } = useStrapi();
 
-const { data: funds } = await useAsyncData(async () => {
+const fundsWithLocale = ref<Fund[]>([]);
+
+watch(locale, async (locale) => {
+  fundsWithLocale.value = await fetchFunds(locale);
+});
+
+const fetchFunds = async (locale?: string) => {
   const { data } = await find<Fund>("fund-collections", {
+    locale:
+      locale ||
+      (localeFromCookie.value as unknown as StrapiLocale) ||
+      defaultLocale,
     populate: {
       organization: true,
       category: {
@@ -73,22 +87,15 @@ const { data: funds } = await useAsyncData(async () => {
   });
 
   return fundWithId;
+};
+
+const { data: funds } = await useAsyncData(async () => {
+  return await fetchFunds();
 });
 
-const { data: categories } = await useAsyncData(async () => {
-  const { data } = await find<Category>("categories", {
-    populate: ["icon"],
-  });
+const currentFunds = computed(() =>
+  fundsWithLocale.value.length ? fundsWithLocale.value : funds.value
+);
 
-  return data;
-});
-
-const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
-  useFilteredFundsByCategory(funds);
-
-const categoriesOptions = computed(() => [
-  DEFAULT_CATEGORY,
-  ...(categories.value?.map((category) => category.attributes.displayName) ||
-    []),
-]);
+const { filteredFunds } = useFilteredFundsByCategory(currentFunds);
 </script>
