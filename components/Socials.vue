@@ -1,13 +1,13 @@
 <template>
   <ul class="flex items-center gap-5">
-    <li v-for="(social, index) in socials" :key="index">
+    <li v-for="(social, index) in socials" :key="index" class="w-10 h-10">
       <a
         :href="social.path"
         target="_blank"
         rel="noopener noreferrer"
         :title="social.name"
       >
-        <Icon :name="`socials/${social.icon}`" />
+        <Icon :name="`socials/${social.icon}`" class="text-graphic" />
       </a>
     </li>
   </ul>
@@ -32,9 +32,9 @@ const socials = ref<Social[]>([
     icon: "telegram",
   },
   {
-    name: "Twitter",
-    path: "https://twitter.com/0xkowloon",
-    icon: "twitter",
+    name: "Instagram",
+    path: "https://instagram.com/0xkowloon",
+    icon: "instagram",
   },
 ]);
 </script>
