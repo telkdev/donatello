@@ -202,7 +202,7 @@ const { data: fundFromBackend } = await useAsyncData(async () => {
       category: {
         populate: {
           icon: {
-            fields: ["name", "url"],
+            fields: ["name", "url", "alternativeText"],
           },
         },
       },
