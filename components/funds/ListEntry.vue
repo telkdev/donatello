@@ -4,7 +4,7 @@
       <div
         class="hidden lg:block mr-8 border border-graphic flex-shrink-0 w-32 h-32"
       >
-        <NuxtLink :to="fund.slug" :aria-label="fund.title">
+        <NuxtLink :to="fundPath" :aria-label="fund.title">
           <Image
             :path="fund.image.data.attributes.url"
             class="object-cover h-full"
@@ -52,7 +52,7 @@
           </button>
         </div>
         <div class="lg:hidden border border-graphic mb-5">
-          <NuxtLink :to="fund.slug" :aria-label="fund.title">
+          <NuxtLink :to="fundPath" :aria-label="fund.title">
             <Image
               :path="fund.image.data.attributes.url"
               class="w-full object-cover"
@@ -62,7 +62,7 @@
           </NuxtLink>
         </div>
         <h2 class="text-xl text-graphic mb-5">
-          <NuxtLink :to="fund.slug" class="hover:text-red-800">
+          <NuxtLink :to="fundPath" class="hover:text-red-800">
             {{ fund.title }}
           </NuxtLink>
         </h2>
@@ -95,7 +95,7 @@
           <span>₴</span>
         </div>
       </div>
-      <ActionLink text="Support" :path="fund.slug" size="md" type="primary" />
+      <ActionLink text="Support" :path="fundPath" size="md" type="primary" />
     </div>
   </div>
 </template>
@@ -124,5 +124,9 @@ const fundCreatedAt = computed(() => {
 const smallDescription = computed(() => {
   if (!props.fund.description) return undefined;
   return props.fund.description?.slice(0, 2);
+});
+
+const fundPath = computed(() => {
+  return `/${props.fund.slug}`;
 });
 </script>
