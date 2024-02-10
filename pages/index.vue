@@ -1,6 +1,7 @@
 <template>
   <div>
     <MainHero />
+    <MainCategories />
     <MainAbout />
     <MainGoals />
     <Quote>
@@ -11,11 +12,10 @@
     <MainFaq />
     <Quote>
       <template #content>
-        <b>Lorem ipsum</b> dolor sit ducimus magnam ea fuga dicta,
-        perspiciatis aliquam magni?
+        <b>Lorem ipsum</b> dolor sit ducimus magnam ea fuga dicta, perspiciatis
+        aliquam magni?
       </template>
     </Quote>
-    <MainCategories />
   </div>
 </template>
 

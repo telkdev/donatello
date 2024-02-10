@@ -1,24 +1,30 @@
 <template>
   <NuxtLink
     :to="'category/' + category.displayName"
-    class="rounded-md p-2 bg-slate-100 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-200"
+    class="flex flex-col items-center group"
   >
-    <span class="text-graphic text-lg block mb-2 text-center">{{
-      category.displayName
-    }}</span>
-    <p class="text-graphic text-base block mb-2 line-clamp-1">
-      <!-- {{ category.description }} -->
-    </p>
-    <span class="text-grey text-sm">123 funds</span>
+    <div
+      class="w-20 h-20 bg-graphic rounded-full flex justify-center items-center mb-4 border-2 border-transparent group-hover:border-graphic group-hover:bg-white transition-all duration-300 ease-in-out"
+    >
+      <Image
+        :path="category.icon.data.attributes.url"
+        :aria-hidden="true"
+        :alt="category.displayName"
+        class="filter invert brightness-0 group-hover:brightness-100 group-hover:invert-0 transition-all duration-300 ease-in-out"
+      />
+    </div>
+
+    <span class="text-graphic lg:text-xl block text-center">
+      {{ category.displayName }}
+    </span>
   </NuxtLink>
 </template>
 
 <script lang="ts" setup>
 import type { Category } from "../funds/types";
 
-type ID = number;
-
-const props = defineProps<{
+// TODO: add alt from alternative text
+defineProps<{
   category: Category;
 }>();
 </script>

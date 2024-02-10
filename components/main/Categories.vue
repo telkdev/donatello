@@ -1,19 +1,15 @@
 <template>
   <section>
     <div class="container py-16">
-      <h3
-        class="text-xl md:text-2xl uppercase pb-5 border-b border-graphic mb-7"
-      >
-        Browse fund by category
-      </h3>
-      <span class="inline-block mb-5"
-        >Looking how to create fund? Browse here(link to create fund)</span
-      >
-      <ul class="flex gap-5 flex-wrap justify-center">
-        <li v-for="(category, index) in categories" :key="index">
+      <ul class="gap-5 grid grid-cols-2 lg:flex lg:flex-wrap lg:justify-center lg:gap-10">
+        <li
+          v-for="(category, index) in categories"
+          :key="index"
+          class="flex justify-center"
+        >
           <CategoriesMetaEntry
             :category="category.attributes"
-            class="w-[150px] min-h-[130px]"
+            class="w-[120px] lg:w-[150px]"
           />
         </li>
       </ul>
@@ -27,7 +23,13 @@ import type { Category } from "../funds/types";
 const { find } = useStrapi();
 
 const { data: categories } = await useAsyncData(async () => {
-  const { data } = await find<Category>("categories");
+  const { data } = await find<Category>("categories", {
+    populate: {
+      icon: {
+        fields: ["name", "url", "alternativeText"],
+      },
+    },
+  });
 
   return data;
 });
