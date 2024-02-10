@@ -162,8 +162,6 @@ const { find } = useStrapi();
 const route = useRoute();
 const router = useRouter();
 
-// const fundByLocale = ref<Fund>();
-
 watch(locale, async (locale) => {
   const initialFundLocale = fundFromBackend.value?.attributes.locale;
 
@@ -179,15 +177,9 @@ watch(locale, async (locale) => {
 
   if (!localizedFund) return;
 
-  // option 1 just redirect - but it is extra request
   router.push({
     path: `/${localizedFund.attributes.slug}`,
   });
-
-  // option 2 change url with histore, add extra ref and populate more
-  // history.pushState({}, "", `/${localizedFund.attributes.slug}`);
-
-  // fundByLocale.value = fromStrapiDataStracrture(localizedFund);
 });
 
 const { localeFromCookie } = useLocalesFromCookie();
@@ -227,37 +219,7 @@ const { data: fundFromBackend } = await useAsyncData(async () => {
         fields: ["name", "url", "alternativeText"],
       },
       localizations: {
-        populate: {
-          organization: true,
-          category: {
-            populate: {
-              icon: {
-                fields: ["name", "url"],
-              },
-            },
-          },
-          image: {
-            fields: ["alternativeText", "url"],
-          },
-          requisites: {
-            populate: {
-              requisite_type: {
-                populate: {
-                  icon: {
-                    fields: ["alternativeText", "url"],
-                  },
-                },
-              },
-              document: {
-                fields: ["name", "url", "alternativeText"],
-              },
-            },
-          },
-          documents: {
-            fields: ["name", "url", "alternativeText"],
-          },
-          localizations: true,
-        },
+        fields: ["slug", "locale"],
       },
     },
     filters: {
