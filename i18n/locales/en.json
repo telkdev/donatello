@@ -68,15 +68,15 @@
       "Goals": {
         "First": {
           "Title": "Convenient access to information",
-          "Description": "Provide convenient access to information about various charitable foundations, including their missions, goals, programs, and contact information."
+          "Description": "Provide convenient access to information about various charitable fundraisers, including their missions, goals, programs, and contact information."
         },
         "Second": {
           "Title": "Search and filtering",
-          "Description": "Enable users to search and filter foundations based on various criteria. This helps users find foundations that meet their specific needs."
+          "Description": "Enable users to search and filter fundraisers based on various criteria. This helps users find fundraisers that meet their specific needs."
         },
         "Third": {
           "Title": "Support for charitable actions",
-          "Description": "Provide information on how users can donate to or support each foundation."
+          "Description": "Provide information on how users can donate to or support each fundraiser."
         },
         "Fourth": {
           "Title": "Public awareness",
