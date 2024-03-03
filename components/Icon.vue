@@ -11,9 +11,9 @@ const props = defineProps<{
 <style>
 /* overwrite plugin styling */
 .nuxt-icon svg {
-  margin-bottom: 0;
-  width: 100%;
-  height: 100%;
-  display: inline-block;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: inline-block !important;
 }
 </style>
