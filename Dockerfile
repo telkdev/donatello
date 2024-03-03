@@ -7,8 +7,6 @@ RUN npm install -g pnpm
 
 ADD . /usr/src/app/
 
-RUN pnpm install pinia @pinia/nuxt
-
 RUN pnpm install
 
 EXPOSE 3000
