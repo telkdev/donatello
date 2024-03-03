@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
 
-const STRAPI_URL = "http://127.0.0.1:1337";
+const STRAPI_URL = process.env.SERVER_URL || "http://127.0.0.1:1337";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
