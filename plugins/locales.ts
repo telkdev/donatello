@@ -3,5 +3,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   const { localeFromCookie } = useLocalesFromCookie();
 
-  i18n.locale.value = localeFromCookie.value || i18n.defaultLocale;
+  i18n.locale.value = localeFromCookie.value || i18n.defaultLocale || 
+  'uk';
 });
