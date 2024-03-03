@@ -1,0 +1,97 @@
+name: Make Pull Request Action
+on:
+  push:
+    branches:
+      - feature/*/*
+      - fix/*/*
+      - feature/*
+      - fix/*
+
+env:
+  PR_EXISTS: 'false'
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR exists
+        id: check_pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            const refName = '${{ github.ref_name }}'
+            const prList = await github.rest.pulls.list({
+              owner,
+              repo,
+              head: `${owner}:${refName}`,
+              base: 'dev',
+              state: 'open'
+            });
+            const prExists = prList.data.length > 0;
+            console.log('PR exists:', refName, owner, prExists);
+
+            if(prExists) {
+              core.exportVariable('PR_EXISTS', 'true');
+            }
+
+      - name: Open Closed Pull Request
+        if: ${{ env.PR_EXISTS == 'false' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            const refName = '${{ github.ref_name }}'
+
+            const closedPRs = await github.rest.pulls.list({
+              owner,
+              repo,
+              head: `${owner}:${refName}`,
+              base: 'dev',
+              state: 'closed'
+            });
+
+            const notMerged = closedPRs.data.filter(pr => !pr.merged_at);
+
+            if(notMerged.length > 0){
+              const pr = notMerged[0];
+              await github.rest.pulls.update({
+                owner,
+                repo,
+                pull_number: pr.number,
+                state: 'open'
+              });
+              core.exportVariable('PR_EXISTS', 'true');
+            }
+
+      - name: Create Pull Request
+        if: ${{ env.PR_EXISTS == 'false' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            const refName = '${{ github.ref_name }}'
+            const prTag = refName.startsWith('fix') ? 'fix': 'feature';
+            const result = await github.rest.pulls.create({
+              title: `[${prTag.toUpperCase()}] Merge PR ${{ github.ref_name }} to dev`,
+              owner,
+              repo,
+              head: '${{ github.ref_name }}',
+              base: 'dev',
+              body: [].join('\n')
+            });
+            const labels = [prTag, 'automated pr'];
+
+
+            github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: result.data.number,
+              labels: labels
+            });
+            github.rest.issues.addAssignees({
+              owner,
+              repo,
+              issue_number: result.data.number,
+              assignees: [context.actor]
+            });
+
