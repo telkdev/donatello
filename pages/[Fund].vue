@@ -60,7 +60,7 @@
             </div>
 
             <button
-              title="Share"
+              :title="t('Fund.Share')"
               class="flex items-center justify-center gap-1 text-sm"
             >
               <Icon name="share" class="w-10 h-10 rounded-full" />
