@@ -15,20 +15,18 @@
         </div>
         <div class="w-full">
           <div class="flex items-center gap-2 flex-wrap mb-4 lg:mb-8">
-            <ul class="flex items-center flex-wrap gap-2">
-              <li
-                v-if="fund.category"
-                class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
-              >
-                <Image
-                  :path="fund.category.data.attributes.icon.data.attributes.url"
-                  class="w-4 mr-1"
-                  :aria-hidden="true"
-                  :alt="fund.category.data.attributes.displayName"
-                />
-                {{ fund.category.data.attributes.displayName }}
-              </li>
-            </ul>
+            <NuxtLink
+              :to="'category/' + fund.category.data.attributes.displayName"
+              class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
+            >
+              <Image
+                :path="fund.category.data.attributes.icon.data.attributes.url"
+                class="w-4 mr-1"
+                :aria-hidden="true"
+                :alt="fund.category.data.attributes.displayName"
+              />
+              {{ fund.category.data.attributes.displayName }}</NuxtLink
+            >
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
             <span class="text-xs">{{ fundCreationDate }}</span>
           </div>
