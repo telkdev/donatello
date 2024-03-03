@@ -76,7 +76,7 @@
         <h2
           class="lg:text-xl uppercase pb-3 lg:pb-6 border-b border-graphic mb-5 lg:mb-8 text-graphic"
         >
-          {{ t("Fund.PaymentMethods") }}
+          {{ t("Fund.PaymentMethods.Title") }}
         </h2>
 
         <Table
