@@ -25,8 +25,8 @@
                 :aria-hidden="true"
                 :alt="fund.category.data.attributes.displayName"
               />
-              {{ fund.category.data.attributes.displayName }}</NuxtLink
-            >
+              {{ fund.category.data.attributes.displayName }}
+            </NuxtLink>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
             <span class="text-xs">{{ fundCreationDate }}</span>
           </div>
@@ -230,7 +230,12 @@ const { data: fundFromBackend } = await useAsyncData(async () => {
 });
 
 const fund = computed(() => {
-  if (!fundFromBackend.value) return;
+  if (!fundFromBackend.value)
+    // TODO: add 404 page
+    throw createError({
+      statusCode: 404,
+      message: "not found",
+    });
   return fromStrapiDataStracrture(fundFromBackend.value);
 });
 

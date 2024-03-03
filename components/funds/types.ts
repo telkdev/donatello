@@ -9,6 +9,7 @@ export type Category = {
   icon: {
     data: WithStrapiStructure<Media>;
   };
+  description: string;
 };
 
 type StrapiCategory = {
