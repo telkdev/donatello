@@ -9,10 +9,10 @@
         class="p-6 border w-full border-graphic bg-mid-grey"
       >
         <NuxtLink :to="fund.slug" class="flex flex-col items-center gap-6">
-          <img
-            :src="'/images/funds/1.webp'"
-            :alt="fund.title"
+          <Image
+            :path="fund.image.data.attributes.url"
             class="w-20 h-20"
+            :alt="fund.image.data.attributes.alternativeText"
           />
           <span class="text-center text-sm">{{ fund.title }}</span>
         </NuxtLink>
@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import type { Fund } from "../funds/types";
-
+// TODO: add new request to fetch top funds
 const props = defineProps<{
   funds: Fund[];
 }>();
