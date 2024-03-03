@@ -39,6 +39,14 @@ export default defineNuxtConfig({
       title: "Nuxt Strapi",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
+      meta: [
+        process.env.MODE !== "production"
+          ? {
+              name: "robots",
+              content: "noindex",
+            }
+          : {},
+      ],
     },
   },
   schemaOrg: {
