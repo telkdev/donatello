@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="text-2xl text-grey uppercase mb-10 md:mb-16">Top Funds</h3>
+    <h3 class="text-2xl text-grey uppercase mb-10 md:mb-16">
+      {{ t("TopFunds.Title") }}
+    </h3>
 
     <ul class="flex flex-wrap items-center gap-5">
       <li
@@ -27,6 +29,8 @@ import type { Fund } from "../funds/types";
 const props = defineProps<{
   funds: Fund[];
 }>();
+
+const { t } = useI18n();
 
 const topFunds = computed(() => {
   const LIMIT = 5;
