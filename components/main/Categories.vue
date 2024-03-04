@@ -36,8 +36,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
 import type { Category } from "../funds/types";
 
+const { t } = useI18n();
 const { find } = useStrapi();
 
 const { data: categories } = await useAsyncData(async () => {
@@ -64,6 +66,6 @@ const allCategoriesEntry = ref<Category>({
     },
   },
   createdAt: "",
-  displayName: "All categories",
+  displayName: t('Header.Menu.Open'),
 });
 </script>
