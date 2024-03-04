@@ -52,7 +52,7 @@ export default defineNuxtConfig({
   schemaOrg: {
     identity: {
       type: "Organization",
-      name: "My Company",
+      name: "Funds UA",
       url: "https://example.com",
       logo: "https://example.com/logo.png",
     },
