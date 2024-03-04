@@ -16,14 +16,18 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
 const navigation = [
   {
-    name: "Funds List",
+    name: t('Main.ActionLinks.Funds'),
     link: "/funds",
   },
   {
-    name: "Create Fundraiser",
-    link: "/create",
+    name: t('Main.ActionLinks.CreateFundraiser'),
+    link: `${process.env.SERVER_URL}/admin/auth/register`,
   },
 ];
 </script>
