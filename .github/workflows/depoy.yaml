@@ -36,4 +36,5 @@ jobs:
         port: ${{ vars.SSH_PORT }}
         commands: |
           cd /srv/funds-backend
+          docker pull ${{ vars.DOCKER_REGISTRY_URL }}/funds-frontend:latest
           docker-compose up -d --build frontend
