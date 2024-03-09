@@ -21,4 +21,8 @@ html,
 #__nuxt {
   height: 100%;
 }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
 </style>
