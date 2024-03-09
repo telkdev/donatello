@@ -47,6 +47,12 @@ export default defineNuxtConfig({
             }
           : {},
       ],
+      link: [
+        {
+          rel: "stylesheet",
+          href: 'https://fonts.googleapis.com/css?family=Montserrat&display=swap"',
+        },
+      ],
     },
   },
   schemaOrg: {
