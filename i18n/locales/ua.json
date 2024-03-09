@@ -17,6 +17,10 @@
     "About": "Про нас",
     "Funds": "Збори"
   },
+  "ActionLinks": {
+    "Funds": "Список зборів",
+    "CreateFundraiser": "Створити збір коштів"
+  },
   "Main": {
     "Hero": {
       "Title": "Допоможіть армії - допоможіть Україні",
@@ -25,8 +29,8 @@
         "CreateFundraiser": "Якщо ви волонтер або у вас є власна благодійна фундація, ви можете створити свій власний збір коштів тут."
       },
       "ActionLinks": {
-        "Funds": "Список зборів",
-        "CreateFundraiser": "Створити збір коштів"
+        "Funds": "@:ActionLinks.Funds",
+        "CreateFundraiser": "@:ActionLinks.CreateFundraiser"
       },
       "Image": {
         "Description": "Карта України"
