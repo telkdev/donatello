@@ -22,6 +22,9 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
+const runtimeConfig = useRuntimeConfig();
+
+
 const navigation = computed(() => [
   {
     name: t("ActionLinks.Funds"),
@@ -29,7 +32,7 @@ const navigation = computed(() => [
   },
   {
     name: t("ActionLinks.CreateFundraiser"),
-    link: `${process.env.SERVER_URL}/admin/auth/register`,
+    link: `${runtimeConfig.public.serverUrl}/admin/auth/register`,
   },
 ]);
 </script>

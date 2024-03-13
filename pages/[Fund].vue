@@ -131,7 +131,7 @@
         <ul class="flex flex-wrap">
           <li v-for="item of documents" class="lg:w-1/2 p-1">
             <a
-              :href="`${runtimeConfig.public.strapiUrl}${item.attributes.url}`"
+              :href="`${runtimeConfig.public.serverUrl}${item.attributes.url}`"
               target="_blank"
               class="text-graphic flex gap-2 items-center hover:text-red-800 cursor-pointer"
             >
@@ -255,13 +255,13 @@ const requisites = computed(() => {
   return fund.value.requisites.data.map((requisite) => {
     return {
       requisite: {
-        url: `${runtimeConfig.public.strapiUrl}${requisite.attributes.requisite_type.data.attributes.icon.data.attributes.url}`,
+        url: `${runtimeConfig.public.serverUrl}${requisite.attributes.requisite_type.data.attributes.icon.data.attributes.url}`,
         alt: requisite.attributes.requisite_type.data.attributes.icon.data
           .attributes.alternativeText,
       },
       value: requisite.attributes.value,
       name: requisite.attributes.owner,
-      documentLink: `${runtimeConfig.public.strapiUrl}${requisite.attributes.document.data.attributes.url}`,
+      documentLink: `${runtimeConfig.public.serverUrl}${requisite.attributes.document.data.attributes.url}`,
     };
   });
 });

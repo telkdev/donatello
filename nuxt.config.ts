@@ -1,13 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
 
-const STRAPI_URL = process.env.SERVER_URL || "http://127.0.0.1:1337";
+const STRAPI_URL =  "http://127.0.0.1:1337";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    // ...
-    "@pinia/nuxt",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/strapi",
     "@nuxtjs/i18n",
@@ -15,13 +13,6 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-schema-org",
   ],
-  pinia: {
-    autoImports: [
-      // automatically imports `defineStore`
-      "defineStore", // import { defineStore } from 'pinia'
-      ["defineStore", "definePiniaStore"], // import { defineStore as definePiniaStore } from 'pinia'
-    ],
-  },
   // https://strapi.nuxtjs.https://pinia.vuejs.org/core-concepts/org/setup
   strapi: {
     url: STRAPI_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
@@ -31,7 +22,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      strapiUrl: STRAPI_URL,
+      serverUrl: STRAPI_URL,
     },
   },
   app: {
@@ -39,14 +30,7 @@ export default defineNuxtConfig({
       title: "Nuxt Strapi",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      meta: [
-        process.env.MODE !== "production"
-          ? {
-              name: "robots",
-              content: "noindex",
-            }
-          : {},
-      ],
+   
       link: [
         {
           rel: "stylesheet",

@@ -14,12 +14,22 @@
               class="max-w-[380px] w-full"
             />
           </div>
+          <div v-if="filteredFunds?.length">
+            <ul class="space-y-8">
+              <li v-for="(fund, index) of filteredFunds" :key="index">
+                <FundsListEntry :fund="fund" />
+              </li>
+            </ul>
+            <div class="flex mt-4 justify-center">
+              <button
+                @click="loadMore"
+                class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
+              >
+                Load more
+              </button>
+            </div>
+          </div>
 
-          <ul v-if="filteredFunds?.length" class="space-y-8">
-            <li v-for="(fund, index) of filteredFunds" :key="index">
-              <FundsListEntry :fund="fund" />
-            </li>
-          </ul>
           <div v-else>{{ t("Funds.NoFunds") }}</div>
         </div>
         <aside class="mt-2 space-y-10 md:space-y-16">
@@ -39,20 +49,20 @@ import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 const { locale, defaultLocale, t } = useI18n();
 const { find } = useStrapi();
 
-const fundsWithLocale = ref<Fund[]>([]);
-
-watch(locale, async (locale) => {
-  fundsWithLocale.value = await fetchFunds(locale);
-});
-
 const { localeFromCookie } = useLocalesFromCookie();
+const { limit, loadMore, page } = useFundsPaginationWith(
+  locale as Ref<StrapiLocale>
+);
 
-const fetchFunds = async (locale?: string) => {
+const fetchFunds = async (options: {
+  locale: StrapiLocale;
+  page: number;
+  limit: number;
+}) => {
+  const { locale, page, limit } = options;
+
   const { data } = await find<Fund>("fund-collections", {
-    locale:
-      locale ||
-      (localeFromCookie.value as unknown as StrapiLocale) ||
-      defaultLocale,
+    locale,
     populate: {
       organization: true,
       category: {
@@ -71,6 +81,7 @@ const fetchFunds = async (locale?: string) => {
         },
       },
     },
+    pagination: { limit: page * limit, start: 0 },
   });
 
   const fundWithId = data.map((item) => {
@@ -85,9 +96,21 @@ const fetchFunds = async (locale?: string) => {
   return fundWithId;
 };
 
-const { data: funds } = await useAsyncData(async () => {
-  return await fetchFunds();
-});
+const { data: funds } = await useAsyncData(
+  async () => {
+    return await fetchFunds({
+      page: page.value,
+      limit: limit.value,
+      locale:
+        locale.value ||
+        (localeFromCookie.value as unknown as StrapiLocale) ||
+        defaultLocale,
+    });
+  },
+  {
+    watch: [page, locale],
+  }
+);
 
 const { data: categories } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
@@ -103,10 +126,48 @@ const categoriesOptions = computed(() => [
     []),
 ]);
 
-const currentFunds = computed(() =>
-  fundsWithLocale.value.length ? fundsWithLocale.value : funds.value
-);
-
 const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
-  useFilteredFundsByCategory(currentFunds);
+  useFilteredFundsByCategory(funds);
+
+function useFundsPaginationWith(locale: Ref<StrapiLocale>) {
+  const DEFAULT_PAGE = 1;
+  const DEFAULT_LIMIT = 2;
+
+  const route = useRoute();
+  const router = useRouter();
+
+  const page = ref(+(route?.query?.page || DEFAULT_PAGE));
+
+  const limit = ref(DEFAULT_LIMIT);
+
+  function loadMore() {
+    page.value++;
+  }
+
+  watch(page, () => {
+    router.push({
+      query: {
+        ...route.query,
+        page: page.value,
+      },
+      path: route.path,
+    });
+  });
+
+  watch(locale, () => {
+    router.push({
+      query: {
+        ...route.query,
+        page: DEFAULT_PAGE,
+      },
+      path: route.path,
+    });
+  });
+
+  return {
+    page,
+    limit,
+    loadMore,
+  };
+}
 </script>
