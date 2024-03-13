@@ -49,18 +49,11 @@ const { localeFromCookie } = useLocalesFromCookie();
 
 const { find } = useStrapi();
 
-const fundsWithLocale = ref<Fund[]>([]);
+const fetchFunds = async (options: { locale: StrapiLocale }) => {
+  const { locale } = options;
 
-watch(locale, async (locale) => {
-  fundsWithLocale.value = await fetchFunds(locale);
-});
-
-const fetchFunds = async (locale?: string) => {
   const { data } = await find<Fund>("fund-collections", {
-    locale:
-      locale ||
-      (localeFromCookie.value as unknown as StrapiLocale) ||
-      defaultLocale,
+    locale,
     populate: {
       organization: true,
       category: {
@@ -98,15 +91,21 @@ const fetchFunds = async (locale?: string) => {
   return fundWithId;
 };
 
-const { data: funds } = await useAsyncData(async () => {
-  return await fetchFunds();
-});
-
-const currentFunds = computed(() =>
-  fundsWithLocale.value.length ? fundsWithLocale.value : funds.value
+const { data: funds } = await useAsyncData(
+  async () => {
+    return await fetchFunds({
+      locale:
+        locale.value ||
+        (localeFromCookie.value as unknown as StrapiLocale) ||
+        defaultLocale,
+    });
+  },
+  {
+    watch: [locale],
+  }
 );
 
-const { filteredFunds } = useFilteredFundsByCategory(currentFunds);
+const { filteredFunds } = useFilteredFundsByCategory(funds);
 
 const { data: category } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
