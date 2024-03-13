@@ -16,6 +16,6 @@ const props = defineProps<{
 const runtimeConfig = useRuntimeConfig();
 
 const imagePath = (path: string) => {
-  return `${runtimeConfig.public.strapiUrl}${path}`;
+  return `${runtimeConfig.public.serverUrl}${path}`;
 };
 </script>
