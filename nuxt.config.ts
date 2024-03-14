@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
 
-const STRAPI_URL =  "http://127.0.0.1:1337";
+const SERVER_URL =  process.env.SERVER_URL || "http://127.0.0.1:1337";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -15,14 +15,14 @@ export default defineNuxtConfig({
   ],
   // https://strapi.nuxtjs.https://pinia.vuejs.org/core-concepts/org/setup
   strapi: {
-    url: STRAPI_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
+    url: SERVER_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
   },
   i18n: {
     vueI18n: "./i18n/i18n.config.ts",
   },
   runtimeConfig: {
     public: {
-      serverUrl: STRAPI_URL,
+      serverUrl: SERVER_URL,
     },
   },
   app: {
