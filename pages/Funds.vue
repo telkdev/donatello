@@ -20,7 +20,10 @@
                 <FundsListEntry :fund="fund" />
               </li>
             </ul>
-            <div class="flex mt-4 justify-center">
+            <div
+              v-if="filteredFunds?.length > limit"
+              class="flex mt-4 justify-center"
+            >
               <button
                 @click="loadMore"
                 class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
@@ -131,7 +134,7 @@ const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
 
 function useFundsPaginationWith(locale: Ref<StrapiLocale>) {
   const DEFAULT_PAGE = 1;
-  const DEFAULT_LIMIT = 2;
+  const DEFAULT_LIMIT = 10;
 
   const route = useRoute();
   const router = useRouter();

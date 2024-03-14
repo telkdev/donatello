@@ -66,6 +66,7 @@ const allCategoriesEntry = ref<Category>({
     },
   },
   createdAt: "",
-  displayName: t('Header.Menu.Open'),
+  displayName: t("Header.Menu.Open"),
+  description: "",
 });
 </script>
