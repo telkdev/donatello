@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     identity: {
       type: "Organization",
       name: "Funds UA",
-      url: "https://example.com",
+      url: "https://example1.com",
       logo: "https://example.com/logo.png",
     },
   },
