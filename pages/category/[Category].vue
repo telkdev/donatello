@@ -105,7 +105,7 @@ const { data: funds } = await useAsyncData(
   }
 );
 
-const { filteredFunds } = useFilteredFundsByCategory(funds);
+const { filteredFunds } = useFilteredFundsByCategory(computed(() => funds.value || []));
 
 const { data: category } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
