@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
 
-const SERVER_URL =  process.env.SERVER_URL || "http://127.0.0.1:1337";
+const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:1337";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -30,12 +30,21 @@ export default defineNuxtConfig({
       title: "Nuxt Strapi",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-   
+
       link: [
         {
           rel: "stylesheet",
           href: 'https://fonts.googleapis.com/css?family=Montserrat&display=swap"',
         },
+      ],
+
+      meta: [
+        process.env.MODE !== "production"
+          ? {
+              name: "robots",
+              content: "noindex",
+            }
+          : {},
       ],
     },
   },
