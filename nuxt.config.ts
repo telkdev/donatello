@@ -23,6 +23,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       serverUrl: SERVER_URL,
+      version: process.env.VERSION || '0.0.0',
     },
   },
   app: {
