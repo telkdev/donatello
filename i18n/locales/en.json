@@ -17,6 +17,10 @@
     "About": "About",
     "Funds": "Funds"
   },
+  "ActionLinks": {
+    "Funds": "Funds List",
+    "CreateFundraiser": "Create Fundraiser"
+  },
   "Main": {
     "Hero": {
       "Title": "Help army - help Ukraine",
@@ -25,8 +29,8 @@
         "CreateFundraiser": "If you are a volunteer or you have your own charitable foundation, you can create your own fundraiser here."
       },
       "ActionLinks": {
-        "Funds": "Funds List",
-        "CreateFundraiser": "Create Fundraiser"
+        "Funds": "@:ActionLinks.Funds",
+        "CreateFundraiser": "@:ActionLinks.CreateFundraiser"
       },
       "Image": {
         "Description": "Map of Ukraine"
@@ -209,7 +213,9 @@
   },
   "Funds": {
     "Title": "Funds",
-    "NoFunds": "No funds found"
+    "NoFunds": "No funds found",
+    "TotalGoal": "Total goal",
+    "Support": "Support"
   },
   "Fund": {
     "TotalGoal": "Total goal",
@@ -226,5 +232,8 @@
     },
     "About": "About project",
     "Documents": "Reports and documents"
+  },
+  "TopFunds": {
+    "Title": "Top funds"
   }
 }

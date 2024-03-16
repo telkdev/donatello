@@ -7,7 +7,7 @@
         <NuxtLink :to="fundPath" :aria-label="fund.title">
           <Image
             :path="fund.image.data.attributes.url"
-            class="object-cover h-full"
+            class="object-cover h-full w-full"
             :aria-hidden="!isDesktop"
             :alt="fund.image.data.attributes.alternativeText"
           />
@@ -89,13 +89,18 @@
     </ul>
     <div class="flex justify-between items-center">
       <div class="mb-2 lg:mb-0">
-        <span class="block uppercase mb-1">total goal</span>
+        <span class="block uppercase mb-1">{{ t("Funds.TotalGoal") }}</span>
         <div>
           <span class="text-xl"> {{ fund.totalGoal }} </span>
           <span>₴</span>
         </div>
       </div>
-      <ActionLink text="Support" :path="fundPath" size="md" type="primary" />
+      <ActionLink
+        :text="t('Funds.Support')"
+        :path="fundPath"
+        size="md"
+        type="primary"
+      />
     </div>
   </div>
 </template>
@@ -109,6 +114,8 @@ const isDesktop = useMediaQuery("(min-width: 1024px)");
 const props = defineProps<{
   fund: Fund;
 }>();
+
+const { t } = useI18n();
 
 const requisites = computed(() => {
   return props.fund.requisites.data.map((requisit) => {
