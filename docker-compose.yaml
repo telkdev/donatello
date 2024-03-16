@@ -1,0 +1,18 @@
+version: '3'
+name: funds_local
+services:
+  frontend:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    container_name: frontend_local
+    build:
+      context: .
+      args:
+        - SERVER_URL=http://localhost:1337
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - funds_local-frontend_vol:/app/frontend
+volumes:
+  funds_local-frontend_vol:

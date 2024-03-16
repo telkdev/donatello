@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
 
-const SERVER_URL = process.env.SERVER_URL || "http://127.0.0.1:1337";
+const SERVER_URL = process.env.SERVER_URL || "http://localhost:1337";
+
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -23,7 +24,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       serverUrl: SERVER_URL,
-      version: process.env.VERSION || '0.0.0',
+      version: process.env.VERSION || "0.0.0",
     },
   },
   app: {
