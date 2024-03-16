@@ -16,21 +16,20 @@
           </div>
           <div v-if="filteredFunds?.length">
             <ul class="space-y-8">
-              <li v-for="(fund, index) of filteredFunds" :key="index">
+              <li v-for="fund of filteredFunds" :key="`fund-${fund.id}`">
                 <FundsListEntry :fund="fund" />
               </li>
             </ul>
-            <div
-              v-if="filteredFunds?.length > limit"
-              class="flex mt-4 justify-center"
-            >
-              <button
-                @click="loadMore"
-                class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
-              >
-                Load more
-              </button>
-            </div>
+            <ClientOnly>
+              <div v-if="loadMoreEnabled" class="flex mt-4 justify-center">
+                <button
+                  @click="loadMore"
+                  class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
+                >
+                  Load more
+                </button>
+              </div>
+            </ClientOnly>
           </div>
 
           <div v-else>{{ t("Funds.NoFunds") }}</div>
@@ -48,6 +47,7 @@
 import type { Fund, Category } from "@/components/funds/types";
 import { useFilteredFundsByCategory } from "./useFilteredFundsByCategory";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
+import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
 
 const { locale, defaultLocale, t } = useI18n();
 const { find } = useStrapi();
@@ -57,14 +57,22 @@ const { limit, loadMore, page } = useFundsPaginationWith(
   locale as Ref<StrapiLocale>
 );
 
-const fetchFunds = async (options: {
+type Options = {
   locale: StrapiLocale;
   page: number;
   limit: number;
-}) => {
+};
+
+type Meta = {
+  pagination: {
+    total: number;
+  };
+};
+
+const fetchFundsAndSetTotal = async (options: Options) => {
   const { locale, page, limit } = options;
 
-  const { data } = await find<Fund>("fund-collections", {
+  const { data, meta } = await find<Fund>("fund-collections", {
     locale,
     populate: {
       organization: true,
@@ -87,21 +95,14 @@ const fetchFunds = async (options: {
     pagination: { limit: page * limit, start: 0 },
   });
 
-  const fundWithId = data.map((item) => {
-    const { attributes } = item;
-
-    return {
-      ...attributes,
-      id: item.id,
-    };
-  });
-
-  return fundWithId;
+  return { data, meta };
 };
 
-const { data: funds } = await useAsyncData(
+// TODO: make promise all for requests
+const { data: strapiFunds } = await useAsyncData(
+  "funds-collection",
   async () => {
-    return await fetchFunds({
+    return await fetchFundsAndSetTotal({
       page: page.value,
       limit: limit.value,
       locale:
@@ -123,6 +124,14 @@ const { data: categories } = await useAsyncData(async () => {
   return data;
 });
 
+// TODOL rewname strapi funds
+const total = computed(
+  () => (strapiFunds.value?.meta as Meta).pagination?.total || 0
+);
+const funds = computed(() =>
+  strapiFunds.value?.data.map((fund) => fromStrapiDataStracrture(fund))
+);
+
 const categoriesOptions = computed(() => [
   DEFAULT_CATEGORY,
   ...(categories.value?.map((category) => category.attributes.displayName) ||
@@ -130,7 +139,7 @@ const categoriesOptions = computed(() => [
 ]);
 
 const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
-  useFilteredFundsByCategory(funds);
+  useFilteredFundsByCategory(computed(() => funds.value || []));
 
 function useFundsPaginationWith(locale: Ref<StrapiLocale>) {
   const DEFAULT_PAGE = 1;
@@ -140,7 +149,6 @@ function useFundsPaginationWith(locale: Ref<StrapiLocale>) {
   const router = useRouter();
 
   const page = ref(+(route?.query?.page || DEFAULT_PAGE));
-
   const limit = ref(DEFAULT_LIMIT);
 
   function loadMore() {
@@ -173,4 +181,8 @@ function useFundsPaginationWith(locale: Ref<StrapiLocale>) {
     loadMore,
   };
 }
+
+const loadMoreEnabled = computed(() => {
+  return total.value > filteredFunds.value.length;
+});
 </script>
