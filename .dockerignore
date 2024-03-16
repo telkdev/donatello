@@ -3,3 +3,4 @@
 **/.vscode
 **/.output
 /package-lock.json
+.env

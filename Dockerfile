@@ -1,7 +1,10 @@
 FROM node:20.10-alpine
 
-
 WORKDIR /usr/src/app
+
+
+ARG SERVER_URL
+ENV SERVER_URL=$SERVER_URL
 
 RUN npm install -g pnpm
 
