@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 import { defineNuxtConfig } from "nuxt/config";
 
 const SERVER_URL = process.env.SERVER_URL || "http://localhost:1337";
@@ -13,7 +12,6 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-schema-org",
   ],
-  // https://strapi.nuxtjs.https://pinia.vuejs.org/core-concepts/org/setup
   strapi: {
     url: SERVER_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
   },
@@ -46,14 +44,6 @@ export default defineNuxtConfig({
             }
           : {},
       ],
-    },
-  },
-  schemaOrg: {
-    identity: {
-      type: "Organization",
-      name: "Funds UA",
-      url: "https://example1.com",
-      logo: "https://example.com/logo.png",
     },
   },
   plugins: ["~/plugins/locales.ts"],

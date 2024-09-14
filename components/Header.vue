@@ -29,8 +29,6 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const { isMenuOpen, openMenu, closeMenu } = useMenu();
 
-const runtimeConfig = useRuntimeConfig();
-
 function useMenu() {
   const isMenuOpen = ref(false);
 
