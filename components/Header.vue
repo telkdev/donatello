@@ -1,8 +1,5 @@
 <template>
   <header class="bg-white">
-    <div>
-      {{ version }}
-    </div>
     <div
       class="flex items-center justify-between gap-2 container py-5 md:py-12"
     >
@@ -33,8 +30,6 @@ const { t } = useI18n();
 const { isMenuOpen, openMenu, closeMenu } = useMenu();
 
 const runtimeConfig = useRuntimeConfig();
-
-const version = computed(() => runtimeConfig.public.version);
 
 function useMenu() {
   const isMenuOpen = ref(false);
