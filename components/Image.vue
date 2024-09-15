@@ -1,9 +1,5 @@
 <template>
-  <img
-    :src="imagePath(props.path)"
-    :alt="props.alt"
-    :aria-hidden="props.ariaHidden"
-  />
+  <img :src="imagePath" :alt="props.alt" :aria-hidden="props.ariaHidden" />
 </template>
 
 <script lang="ts" setup>
@@ -13,9 +9,5 @@ const props = defineProps<{
   ariaHidden?: boolean;
 }>();
 
-const runtimeConfig = useRuntimeConfig();
-
-const imagePath = (path: string) => {
-  return `${runtimeConfig.public.serverUrl}${path}`;
-};
+const { imagePath } = useImagePath(computed(() => props.path));
 </script>

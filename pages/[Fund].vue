@@ -272,12 +272,49 @@ const documents = computed(() => {
   return fund.value.documents.data;
 });
 
-useHead({
-  title: "My App",
-  meta: [{ name: "description", content: "My amazing site." }],
-});
+(function useSeo() {
+  const title = computed(
+    () =>
+      fund.value?.title ??
+      "UAFunds | Help small ukranian funds to collect finances for their goals"
+  );
 
-useSchemaOrg({
-  context: "https://schema.org",
-});
+  //TODO: description from fund
+  const description = computed(
+    () =>
+      `Detail about ${fund.value?.title}, how much money they need, what they are going to do with it, how you can help`
+  );
+
+  const { imagePath: image } = useImagePath(
+    computed(() => fund.value?.image.data.attributes.url)
+  );
+
+  useSeoMeta({
+    title: title.value,
+    ogTitle: title.value,
+    description: description.value,
+    ogDescription: description.value,
+    ogImage: image.value,
+    twitterCard: "summary_large_image",
+  });
+
+  useSchemaOrg([
+    defineWebPage({
+      name: fund.value?.title,
+      description: description.value,
+      mainContentOfPage: fund.value?.description,
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        contentUrl: image.value,
+      },
+      audience: {
+        "@type": "Audience",
+        audienceType:
+          "general, veterans, volunteers, donors, sponsors, partners, good-doers, all, people who want to help",
+      },
+      specialty:
+        "help, charity, donation, fundraising, support, assistance, fund, project",
+    }),
+  ]);
+})();
 </script>

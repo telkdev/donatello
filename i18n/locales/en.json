@@ -18,19 +18,17 @@
     "Funds": "Funds"
   },
   "ActionLinks": {
-    "Funds": "Funds List",
-    "CreateFundraiser": "Create Fundraiser"
+    "Funds": "Funds List"
   },
   "Main": {
     "Hero": {
       "Title": "Help army - help Ukraine",
       "Description": {
         "Contribution": "Here you will find a list of all charitable organizations, if you wish to make a charitable contribution.",
-        "CreateFundraiser": "If you are a volunteer or you have your own charitable foundation, you can create your own fundraiser here."
+        "CreateFundraiser": "If you are a volunteer or you have your own charitable foundation, you can create your own fundraiser by writing us."
       },
       "ActionLinks": {
-        "Funds": "@:ActionLinks.Funds",
-        "CreateFundraiser": "@:ActionLinks.CreateFundraiser"
+        "Funds": "@:ActionLinks.Funds"
       },
       "Image": {
         "Description": "Map of Ukraine"
@@ -174,6 +172,10 @@
           "Answer": "To promote the fundraiser, there is a button that allows you to copy the link to the fundraiser. This way, you can share the link on any of your social media platforms or simply forward it to people you know. Remember that spreading the word about fundraisers is crucial and accelerates progress towards the goal."
         }
       }
+    },
+    "Quotes": {
+      "Shield": "Together, we stand as a shield of hope. Every contribution strengthens Ukraine's resilience.",
+      "Support": "Supporting the army is a way to protect our country and ensure a peaceful future for our children."
     }
   },
   "FAQ": {

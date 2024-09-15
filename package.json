@@ -8,8 +8,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "analyze": "npx nuxi analyze",
-    "prebuild": "node scripts/app-version.js"
+    "analyze": "npx nuxi analyze"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
