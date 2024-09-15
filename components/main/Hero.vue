@@ -11,9 +11,6 @@
           <p class="text-lg">
             {{ t("Main.Hero.Description.Contribution") }}
           </p>
-          <p class="text-lg">
-            {{ t("Main.Hero.Description.CreateFundraiser") }}
-          </p>
         </div>
         <div
           class="flex gap-5 md:gap-8 flex-wrap justify-center md:justify-start"
@@ -23,12 +20,6 @@
             path="/funds"
             size="lg"
             type="primary"
-          />
-          <ActionLink
-            :text="t('Main.Hero.ActionLinks.CreateFundraiser')"
-            path="/create"
-            size="lg"
-            type="secondary"
           />
         </div>
       </div>

@@ -18,19 +18,17 @@
     "Funds": "Funds"
   },
   "ActionLinks": {
-    "Funds": "Funds List",
-    "CreateFundraiser": "Create Fundraiser"
+    "Funds": "Funds List"
   },
   "Main": {
     "Hero": {
       "Title": "Help army - help Ukraine",
       "Description": {
         "Contribution": "Here you will find a list of all charitable organizations, if you wish to make a charitable contribution.",
-        "CreateFundraiser": "If you are a volunteer or you have your own charitable foundation, you can create your own fundraiser here."
+        "CreateFundraiser": "If you are a volunteer or you have your own charitable foundation, you can create your own fundraiser by writing us."
       },
       "ActionLinks": {
-        "Funds": "@:ActionLinks.Funds",
-        "CreateFundraiser": "@:ActionLinks.CreateFundraiser"
+        "Funds": "@:ActionLinks.Funds"
       },
       "Image": {
         "Description": "Map of Ukraine"
