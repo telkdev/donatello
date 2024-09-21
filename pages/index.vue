@@ -6,27 +6,31 @@
     <MainGoals />
     <Quote>
       <template #content>
-        <b>Lorem ipsum</b> dolor sit amet consectetur, adipisicing elit.
+        {{ t("Main.Quotes.Shield") }}
       </template>
     </Quote>
     <MainFaq />
     <Quote>
       <template #content>
-        <b>Lorem ipsum</b> dolor sit ducimus magnam ea fuga dicta, perspiciatis
-        aliquam magni?
+        {{ t("Main.Quotes.Support") }}
       </template>
     </Quote>
   </div>
 </template>
 
 <script setup lang="ts">
-useHead({
-  title: "Some test title with good seo",
-  meta: [
-    {
-      name: "description",
-      content: "Description comntent",
-    },
-  ],
+const { t, locale } = useI18n();
+
+const title =
+  "UAFunds | Help small Ukranian funds to collect finances for their goals";
+const description =
+  "UAFunds is a platform that helps small funds to collect finances for their needs. Users can donate money to funds or create funds themselves.";
+
+useSeoMeta({
+  ogLocale: locale,
+  title: title,
+  ogTitle: title,
+  description: description,
+  ogDescription: description,
 });
 </script>

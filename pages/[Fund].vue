@@ -154,8 +154,12 @@ import type { Fund } from "~/components/funds/types";
 import { useMediaQuery } from "@vueuse/core";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
+import { useLocalesStore } from "~/stores/locales";
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, availableLocales, defaultLocale, t } = useI18n();
+
+const localesStore = useLocalesStore();
+
 const { find } = useStrapi();
 const route = useRoute();
 const router = useRouter();
@@ -173,7 +177,9 @@ watch(locale, async (locale) => {
     (localization) => localization.attributes.locale === locale
   );
 
-  if (!localizedFund) return;
+  if (!localizedFund) {
+    return;
+  }
 
   router.push({
     path: `/${localizedFund.attributes.slug}`,
@@ -239,6 +245,41 @@ const fund = computed(() => {
   return fromStrapiDataStracrture(fundFromBackend.value);
 });
 
+const fundLocales = computed(() => {
+  return fund.value.localizations.data.map(
+    (localization) => localization.attributes.locale
+  );
+});
+
+const newLocales = computed(() => {
+  return availableLocales.map((locale) => {
+    return {
+      data: locale,
+      isDisabled:
+        !fundLocales.value.includes(locale) || fund.value.locale === locale,
+    };
+  });
+});
+
+watch(
+  newLocales,
+  (val) => {
+    localesStore.setLocales(val);
+  },
+  {
+    immediate: true,
+  }
+);
+
+onUnmounted(() => {
+  localesStore.setLocales(
+    availableLocales.map((l) => ({
+      data: l,
+      isDisabled: false,
+    }))
+  );
+});
+
 const isDesktop = useMediaQuery("(min-width: 1024px)");
 
 const fundCreationDate = computed(() => {
@@ -272,12 +313,52 @@ const documents = computed(() => {
   return fund.value.documents.data;
 });
 
-useHead({
-  title: "My App",
-  meta: [{ name: "description", content: "My amazing site." }],
-});
+(function useSeo() {
+  const title = computed(
+    () =>
+      fund.value?.title ??
+      "UAFunds | Help small ukranian funds to collect finances for their goals"
+  );
 
-useSchemaOrg({
-  context: "https://schema.org",
-});
+  //TODO: description from fund
+  const description = computed(
+    () =>
+      `Detail about ${fund.value?.title}, how much money they need, what they are going to do with it, how you can help`
+  );
+
+  const { imagePath: image } = useImagePath(
+    computed(() => fund.value?.image.data.attributes.url)
+  );
+
+  
+
+  useSeoMeta({
+    ogLocale: locale,
+    title: title.value,
+    ogTitle: title.value,
+    description: description.value,
+    ogDescription: description.value,
+    ogImage: image.value,
+    twitterCard: "summary_large_image",
+  });
+
+  useSchemaOrg([
+    defineWebPage({
+      name: fund.value?.title,
+      description: description.value,
+      mainContentOfPage: fund.value?.description,
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        contentUrl: image.value,
+      },
+      audience: {
+        "@type": "Audience",
+        audienceType:
+          "general, veterans, volunteers, donors, sponsors, partners, good-doers, all, people who want to help",
+      },
+      specialty:
+        "help, charity, donation, fundraising, support, assistance, fund, project",
+    }),
+  ]);
+})();
 </script>

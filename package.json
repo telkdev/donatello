@@ -8,14 +8,14 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "analyze": "npx nuxi analyze",
-    "prebuild": "node scripts/app-version.js"
+    "analyze": "npx nuxi analyze"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "^8.0.0-rc.5",
     "@nuxtjs/strapi": "^1.9.3",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@pinia/nuxt": "^0.5.4",
     "@tailwindcss/typography": "^0.5.10",
     "nuxt": "^3.7.4",
     "nuxt-schema-org": "^3.3.3",
@@ -25,6 +25,7 @@
   "dependencies": {
     "@vueuse/nuxt": "^10.6.1",
     "nuxt-icons": "^3.2.1",
+    "pinia": "^2.2.2",
     "vue-i18n": "^9.5.0"
   }
 }
