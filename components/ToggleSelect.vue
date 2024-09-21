@@ -6,10 +6,11 @@
       <button
         class="uppercase font-bold"
         :class="{
-          'text-black': value.data === props.modelValue,
-          'pointer-events-none opacity-50': value.isDisabled,
+          'opacity-70 pointer-events-none': value.isDisabled,
+          'text-black !opacity-100': value.data === props.modelValue,
           
         }"
+        :disabled="value.isDisabled"
         @click="selectValue(value.data)"
       >
         {{ value.data }}
