@@ -19,17 +19,18 @@
 </template>
 
 <script setup lang="ts">
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
-useHead({
-  title:
-    "UAFunds | Help small ukranian funds to collect finances for their goals",
-  meta: [
-    {
-      name: "description",
-      content:
-        "UAFunds is a platform that helps small funds to collect finances for their needs. Users can donate money to funds or create funds themselves.",
-    },
-  ],
+const title =
+  "UAFunds | Help small Ukranian funds to collect finances for their goals";
+const description =
+  "UAFunds is a platform that helps small funds to collect finances for their needs. Users can donate money to funds or create funds themselves.";
+
+useSeoMeta({
+  ogLocale: locale,
+  title: title,
+  ogTitle: title,
+  description: description,
+  ogDescription: description,
 });
 </script>

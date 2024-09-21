@@ -289,7 +289,10 @@ const documents = computed(() => {
     computed(() => fund.value?.image.data.attributes.url)
   );
 
+  
+
   useSeoMeta({
+    ogLocale: locale,
     title: title.value,
     ogTitle: title.value,
     description: description.value,
