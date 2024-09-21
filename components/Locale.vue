@@ -1,13 +1,18 @@
 <template>
   <div class="flex">
-    <ToggleSelect v-model="locale" :values="availableLocales" />
+    <ToggleSelect v-model="locale" :values="localesState" />
   </div>
 </template>
 
 <script lang="ts" setup>
 // TODO: maybe move to composable that will handle cookies
 const { availableLocales, locale, setLocaleCookie } = useI18n();
-
+const localesState = useState("locales", () =>
+  availableLocales.map((l) => ({
+    data: l,
+    isDisabled: false,
+  }))
+);
 const { localeFromCookie } = useLocalesFromCookie();
 
 onMounted(() => {

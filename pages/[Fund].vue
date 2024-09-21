@@ -155,10 +155,19 @@ import { useMediaQuery } from "@vueuse/core";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, availableLocales, defaultLocale, t } = useI18n();
+const localesState =
+  useState<{ data: string; isDisabled: boolean }[]>("locales");
 const { find } = useStrapi();
 const route = useRoute();
 const router = useRouter();
+
+// onUnmounted(() => {
+// localesState.value = availableLocales.map((l) => ({
+//   data: l,
+//   isDisabled: false,
+// }));
+// });
 
 watch(locale, async (locale) => {
   const initialFundLocale = fundFromBackend.value?.attributes.locale;
@@ -173,7 +182,9 @@ watch(locale, async (locale) => {
     (localization) => localization.attributes.locale === locale
   );
 
-  if (!localizedFund) return;
+  if (!localizedFund) {
+    return;
+  }
 
   router.push({
     path: `/${localizedFund.attributes.slug}`,
@@ -237,6 +248,23 @@ const fund = computed(() => {
       message: "not found",
     });
   return fromStrapiDataStracrture(fundFromBackend.value);
+});
+
+watchEffect(() => {
+  const fundLocales = fund.value.localizations.data.map(
+    (localization) => localization.attributes.locale
+  );
+
+  const newLocales = availableLocales.map((locale) => {
+    return {
+      data: locale,
+      isDisabled: !fundLocales.includes(locale) || fund.value.locale === locale,
+    };
+  });
+
+  // if (JSON.stringify(newLocales) !== JSON.stringify(localesState.value)) {
+  localesState.value = newLocales;
+  // }
 });
 
 const isDesktop = useMediaQuery("(min-width: 1024px)");
