@@ -1,0 +1,3 @@
+User-Agent: *
+Allow: http://uafunds.org/
+Disallow: http://api.uafunds.org/
