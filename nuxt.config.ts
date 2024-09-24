@@ -4,7 +4,15 @@ const SERVER_URL = process.env.SERVER_URL || "http://localhost:1337";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/strapi", "@nuxtjs/i18n", "nuxt-icons", "@vueuse/nuxt", "nuxt-schema-org", "@pinia/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/strapi",
+    "@nuxtjs/i18n",
+    "nuxt-icons",
+    "@vueuse/nuxt",
+    "nuxt-schema-org",
+    "@pinia/nuxt"
+  ],
   strapi: {
     url: SERVER_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
   },
