@@ -154,8 +154,13 @@ import type { Fund } from "~/components/funds/types";
 import { useMediaQuery } from "@vueuse/core";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
+import { useLocalesStore } from "~/stores/locales";
+import { LOCALES } from "~/constants/locales";
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, availableLocales, defaultLocale, t } = useI18n();
+
+const localesStore = useLocalesStore();
+
 const { find } = useStrapi();
 const route = useRoute();
 const router = useRouter();
@@ -173,7 +178,9 @@ watch(locale, async (locale) => {
     (localization) => localization.attributes.locale === locale
   );
 
-  if (!localizedFund) return;
+  if (!localizedFund) {
+    return;
+  }
 
   router.push({
     path: `/${localizedFund.attributes.slug}`,
@@ -182,11 +189,28 @@ watch(locale, async (locale) => {
 
 const { localeFromCookie } = useLocalesFromCookie();
 
+const currentLocale =
+  (localeFromCookie.value as unknown as StrapiLocale) || defaultLocale;
 // TODO: check what fields are needed
 const { data: fundFromBackend } = await useAsyncData(async () => {
-  const { data } = await find<Fund>("fund-collections", {
-    locale:
-      (localeFromCookie.value as unknown as StrapiLocale) || defaultLocale,
+  let { data } = await getFund(currentLocale);
+
+  // HOTFIX retry logic with another locale
+  if (!data.length) {
+    const [retryLocale] = availableLocales.filter(
+      (l) => l !== currentLocale
+    ) as StrapiLocale[];
+    const { data } = await getFund(retryLocale);
+
+    return data[0];
+  }
+
+  return data[0];
+});
+
+function getFund(locale: StrapiLocale) {
+  return find<Fund>("fund-collections", {
+    locale,
     populate: {
       organization: true,
       category: {
@@ -225,9 +249,7 @@ const { data: fundFromBackend } = await useAsyncData(async () => {
     },
     pagination: { limit: 1, start: 0 },
   });
-
-  return data[0];
-});
+}
 
 const fund = computed(() => {
   if (!fundFromBackend.value)
@@ -237,6 +259,41 @@ const fund = computed(() => {
       message: "not found",
     });
   return fromStrapiDataStracrture(fundFromBackend.value);
+});
+
+const fundLocales = computed(() => {
+  return fund.value.localizations.data.map(
+    (localization) => localization.attributes.locale
+  );
+});
+
+const newLocales = computed(() => {
+  return availableLocales.map((locale) => {
+    return {
+      data: locale,
+      isDisabled:
+        !fundLocales.value.includes(locale) || fund.value.locale === locale,
+    };
+  });
+});
+
+watch(
+  newLocales,
+  (val) => {
+    localesStore.setLocales(val);
+  },
+  {
+    immediate: true,
+  }
+);
+
+onUnmounted(() => {
+  localesStore.setLocales(
+    availableLocales.map((l) => ({
+      data: l,
+      isDisabled: false,
+    }))
+  );
 });
 
 const isDesktop = useMediaQuery("(min-width: 1024px)");
@@ -289,13 +346,38 @@ const documents = computed(() => {
     computed(() => fund.value?.image.data.attributes.url)
   );
 
+  useHead({
+    meta: [
+      {
+        name: "og:title",
+        content: title.value,
+      },
+      {
+        name: "og:description",
+        content: description.value,
+      },
+      {
+        name: "og:image",
+        content: image.value,
+      },
+      {
+        name: "og:locale",
+        content: LOCALES[locale.value],
+      },
+      {
+        name: "og:type",
+        content: "website",
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  });
+
   useSeoMeta({
     title: title.value,
-    ogTitle: title.value,
     description: description.value,
-    ogDescription: description.value,
-    ogImage: image.value,
-    twitterCard: "summary_large_image",
   });
 
   useSchemaOrg([

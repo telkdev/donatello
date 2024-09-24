@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "nuxt-icons",
     "@vueuse/nuxt",
     "nuxt-schema-org",
+    "@pinia/nuxt"
   ],
   strapi: {
     url: SERVER_URL, // https://forum.strapi.io/t/strapi-axios-request-on-ssr-fails-with-connect-econnrefused-but-csr-works-well/20799/7
