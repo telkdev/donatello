@@ -45,6 +45,8 @@ const { find } = useStrapi();
 const { data: categories } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
     populate: {
+      displayName: "*",
+      description: "*",
       icon: {
         fields: ["name", "url", "alternativeText"],
       },

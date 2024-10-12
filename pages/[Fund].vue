@@ -16,16 +16,18 @@
         <div class="w-full">
           <div class="flex items-center gap-2 flex-wrap mb-4 lg:mb-8">
             <NuxtLink
-              :to="'category/' + fund.category.data.attributes.displayName"
+              :to="
+                'category/' + fund.category.data.attributes.displayName[locale]
+              "
               class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
             >
               <Image
                 :path="fund.category.data.attributes.icon.data.attributes.url"
                 class="w-4 mr-1"
                 :aria-hidden="true"
-                :alt="fund.category.data.attributes.displayName"
+                :alt="fund.category.data.attributes.displayName[locale]"
               />
-              {{ fund.category.data.attributes.displayName }}
+              {{ fund.category.data.attributes.displayName[locale] }}
             </NuxtLink>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
             <span class="text-xs">{{ fundCreationDate }}</span>
@@ -215,6 +217,7 @@ function getFund(locale: StrapiLocale) {
       organization: true,
       category: {
         populate: {
+          displayName: "*",
           icon: {
             fields: ["name", "url", "alternativeText"],
           },

@@ -78,6 +78,8 @@ const fetchFundsAndSetTotal = async (options: Options) => {
       organization: true,
       category: {
         populate: {
+          displayName: "*",
+          description: "*",
           icon: {
             fields: ["name", "url"],
           },
@@ -107,7 +109,7 @@ const { data: strapiFunds } = await useAsyncData(
       limit: limit.value,
       locale:
         locale.value ||
-        (localeFromCookie.value as unknown as StrapiLocale) ||
+        (localeFromCookie?.value as unknown as StrapiLocale) ||
         defaultLocale,
     });
   },
@@ -118,13 +120,13 @@ const { data: strapiFunds } = await useAsyncData(
 
 const { data: categories } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
-    populate: ["icon"],
+    populate: ["icon", "description", "displayName"],
   });
 
   return data;
 });
 
-// TODOL rewname strapi funds
+// TODO rename strapi funds
 const total = computed(
   () => (strapiFunds.value?.meta as Meta).pagination?.total || 0
 );
@@ -134,8 +136,9 @@ const funds = computed(() =>
 
 const categoriesOptions = computed(() => [
   DEFAULT_CATEGORY,
-  ...(categories.value?.map((category) => category.attributes.displayName) ||
-    []),
+  ...(categories.value?.map(
+    (category) => category?.attributes?.displayName?.[locale.value]
+  ) || []),
 ]);
 
 const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
