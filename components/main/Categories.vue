@@ -16,7 +16,7 @@
             </div>
 
             <span class="text-graphic lg:text-xl block text-center">
-              {{ allCategoriesEntry.displayName }}
+              {{ allCategoriesEntry.displayName[locale] }}
             </span>
           </NuxtLink>
         </li>
@@ -37,14 +37,16 @@
 
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
-import type { Category } from "../funds/types";
+import type { Category, LocaleField } from "../funds/types";
 
-const { t } = useI18n();
+const { t, availableLocales, locale } = useI18n();
 const { find } = useStrapi();
 
 const { data: categories } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
     populate: {
+      displayName: "*",
+      description: "*",
       icon: {
         fields: ["name", "url", "alternativeText"],
       },
@@ -53,6 +55,18 @@ const { data: categories } = await useAsyncData(async () => {
 
   return data;
 });
+
+const displayName = availableLocales.reduce((acc, locale) => {
+  acc[locale] = t("Header.Menu.Open");
+
+  return acc;
+}, {} as LocaleField);
+
+const description = availableLocales.reduce((acc, locale) => {
+  acc[locale] = "";
+
+  return acc;
+}, {} as LocaleField);
 
 const allCategoriesEntry = ref<Category>({
   icon: {
@@ -66,7 +80,7 @@ const allCategoriesEntry = ref<Category>({
     },
   },
   createdAt: "",
-  displayName: t("Header.Menu.Open"),
-  description: "",
+  displayName: displayName,
+  description: description,
 });
 </script>
