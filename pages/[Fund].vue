@@ -123,7 +123,7 @@
 
         <RichTextBlocks :data="fund?.description" class="mb-6" />
       </div>
-      <div>
+      <div v-if="!!documents?.length">
         <h2
           class="lg:text-xl uppercase pb-3 lg:pb-6 border-b border-graphic mb-5 lg:mb-8 text-graphic"
         >
