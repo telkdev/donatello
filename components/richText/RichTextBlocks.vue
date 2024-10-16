@@ -95,7 +95,7 @@ function renderText(children: RichTextBlockChild[]) {
             v-html="renderText(child.children)"
           />
           <template v-else-if="child.type === RichTextBlockChildType.text">
-            {{ child.text && console.log({ t: child.text }) }}
+            {{ child.text }}
           </template>
         </template>
       </p>
