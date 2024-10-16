@@ -43,15 +43,6 @@ export default defineNuxtConfig({
           href: 'https://fonts.googleapis.com/css?family=Montserrat&display=swap"',
         },
       ],
-
-      meta: [
-        process.env.MODE !== "production"
-          ? {
-              name: "robots",
-              content: "noindex",
-            }
-          : {},
-      ],
     },
   },
   plugins: ["~/plugins/locales.ts"],
