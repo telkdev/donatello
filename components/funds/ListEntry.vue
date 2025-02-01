@@ -24,10 +24,10 @@
                   :path="fund.category.data.attributes.icon.data.attributes.url"
                   class="w-4 mr-1"
                   :aria-hidden="true"
-                  :alt="fund.category.data.attributes.displayName"
+                  :alt="fund.category.data.attributes.displayName[locale]"
                 />
 
-                {{ fund.category.data.attributes.displayName }}
+                {{ fund.category.data.attributes.displayName[locale] }}
               </li>
             </ul>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
@@ -115,7 +115,7 @@ const props = defineProps<{
   fund: Fund;
 }>();
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const requisites = computed(() => {
   return props.fund.requisites.data.map((requisit) => {

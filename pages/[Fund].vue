@@ -16,16 +16,18 @@
         <div class="w-full">
           <div class="flex items-center gap-2 flex-wrap mb-4 lg:mb-8">
             <NuxtLink
-              :to="'category/' + fund.category.data.attributes.displayName"
+              :to="
+                'category/' + fund.category.data.attributes.displayName[locale]
+              "
               class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
             >
               <Image
                 :path="fund.category.data.attributes.icon.data.attributes.url"
                 class="w-4 mr-1"
                 :aria-hidden="true"
-                :alt="fund.category.data.attributes.displayName"
+                :alt="fund.category.data.attributes.displayName[locale]"
               />
-              {{ fund.category.data.attributes.displayName }}
+              {{ fund.category.data.attributes.displayName[locale] }}
             </NuxtLink>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
             <span class="text-xs">{{ fundCreationDate }}</span>
@@ -121,7 +123,7 @@
 
         <RichTextBlocks :data="fund?.description" class="mb-6" />
       </div>
-      <div>
+      <div v-if="!!documents?.length">
         <h2
           class="lg:text-xl uppercase pb-3 lg:pb-6 border-b border-graphic mb-5 lg:mb-8 text-graphic"
         >
@@ -157,7 +159,14 @@ import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 import { useLocalesStore } from "~/stores/locales";
 import { LOCALES } from "~/constants/locales";
 
-const { locale, availableLocales, defaultLocale, t } = useI18n();
+const {
+  locale,
+  availableLocales,
+  defaultLocale,
+  t,
+  setLocaleCookie,
+  setLocale,
+} = useI18n();
 
 const localesStore = useLocalesStore();
 
@@ -193,71 +202,90 @@ const currentLocale =
   (localeFromCookie.value as unknown as StrapiLocale) || defaultLocale;
 // TODO: check what fields are needed
 const { data: fundFromBackend } = await useAsyncData(async () => {
-  let { data } = await getFund(currentLocale);
+  const event = useRequestEvent();
 
+  let { data } = await getFund(currentLocale);
   // HOTFIX retry logic with another locale
   if (!data.length) {
     const [retryLocale] = availableLocales.filter(
       (l) => l !== currentLocale
     ) as StrapiLocale[];
     const { data } = await getFund(retryLocale);
-
+    event.node.res.setHeader(
+      "Set-Cookie",
+      `i18n_redirected=${retryLocale}; Path=/;`
+    );
+    setLocale(retryLocale);
     return data[0];
   }
+
+  event.node.res.setHeader(
+    "Set-Cookie",
+    `i18n_redirected=${locale.value}; Path=/;`
+  );
+  setLocale(locale.value);
 
   return data[0];
 });
 
-function getFund(locale: StrapiLocale) {
-  return find<Fund>("fund-collections", {
-    locale,
-    populate: {
-      organization: true,
-      category: {
-        populate: {
-          icon: {
-            fields: ["name", "url", "alternativeText"],
-          },
-        },
-      },
-      image: {
-        fields: ["alternativeText", "url"],
-      },
-      requisites: {
-        populate: {
-          requisite_type: {
-            populate: {
-              icon: {
-                fields: ["alternativeText", "url"],
-              },
+async function getFund(locale: StrapiLocale) {
+  try {
+    return await find<Fund>("fund-collections", {
+      locale,
+      populate: {
+        organization: true,
+        category: {
+          populate: {
+            displayName: "*",
+            icon: {
+              fields: ["name", "url", "alternativeText"],
             },
           },
-          document: {
-            fields: ["name", "url", "alternativeText"],
+        },
+        image: {
+          fields: ["alternativeText", "url"],
+        },
+        requisites: {
+          populate: {
+            requisite_type: {
+              displayName: "*",
+              populate: {
+                icon: {
+                  fields: ["alternativeText", "url"],
+                },
+              },
+            },
+            document: {
+              fields: ["name", "url", "alternativeText"],
+            },
           },
         },
+        documents: {
+          fields: ["name", "url", "alternativeText"],
+        },
+        localizations: {
+          fields: ["slug", "locale"],
+        },
       },
-      documents: {
-        fields: ["name", "url", "alternativeText"],
+      filters: {
+        slug: route.params.Fund,
       },
-      localizations: {
-        fields: ["slug", "locale"],
-      },
-    },
-    filters: {
-      slug: route.params.Fund,
-    },
-    pagination: { limit: 1, start: 0 },
-  });
+      pagination: { limit: 1, start: 0 },
+    });
+  } catch (e) {
+    console.error(e);
+    return { data: [] };
+  }
 }
 
 const fund = computed(() => {
-  if (!fundFromBackend.value)
+  if (!fundFromBackend.value) {
     // TODO: add 404 page
     throw createError({
       statusCode: 404,
       message: "not found",
     });
+  }
   return fromStrapiDataStracrture(fundFromBackend.value);
 });
 
@@ -296,6 +324,16 @@ onUnmounted(() => {
   );
 });
 
+function setLocaleI18N(locale: string) {
+  setLocaleCookie(locale);
+  setLocale(locale);
+}
+
+onMounted(() => {
+  if (!fund.value) return;
+  setLocaleI18N(fund.value.locale);
+});
+
 const isDesktop = useMediaQuery("(min-width: 1024px)");
 
 const fundCreationDate = computed(() => {
@@ -315,6 +353,7 @@ const requisites = computed(() => {
         url: `${runtimeConfig.public.serverUrl}${requisite.attributes.requisite_type.data.attributes.icon.data.attributes.url}`,
         alt: requisite.attributes.requisite_type.data.attributes.icon.data
           .attributes.alternativeText,
+        type: requisite.attributes.requisite_type.data.attributes.displayName,
       },
       value: requisite.attributes.value,
       name: requisite.attributes.owner,
