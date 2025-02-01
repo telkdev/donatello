@@ -29,11 +29,14 @@ const navigation = computed(() => [
   {
     name: t("ActionLinks.Funds"),
     link: "/funds",
-  }/* ,
-  {
-    name: t("ActionLinks.CreateFundraiser"),
-    link: `${runtimeConfig.public.serverUrl}/admin/auth/register`,
-  }, */
+  }
+  /* ,
+    {
+      name: t("ActionLinks.CreateFundraiser"),
+      link: `${runtimeConfig.public.serverUrl}/admin/auth/register`,
+    },
+  */
+
 ]);
 </script>
 
