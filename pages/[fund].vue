@@ -211,18 +211,11 @@ const { data: fundFromBackend } = await useAsyncData(async () => {
       (l) => l !== currentLocale
     ) as StrapiLocale[];
     const { data } = await getFund(retryLocale);
-    event.node.res.setHeader(
-      "Set-Cookie",
-      `i18n_redirected=${retryLocale}; Path=/;`
-    );
+
     setLocale(retryLocale);
     return data[0];
   }
 
-  event.node.res.setHeader(
-    "Set-Cookie",
-    `i18n_redirected=${locale.value}; Path=/;`
-  );
   setLocale(locale.value);
 
   return data[0];
