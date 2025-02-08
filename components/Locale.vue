@@ -15,12 +15,14 @@ const { locales } = storeToRefs(localesStore);
 
 const { localeFromCookie } = useLocalesFromCookie();
 
-localesStore.setLocales(
+const mappedLocales = computed(() =>
   availableLocales.map((l) => ({
     data: l,
     isDisabled: false,
   }))
 );
+
+localesStore.setLocales(mappedLocales.value);
 
 onMounted(() => {
   if (localeFromCookie.value) locale.value = localeFromCookie.value;

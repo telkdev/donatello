@@ -39,9 +39,19 @@
             v-else-if="props.columns[index].isLink"
             :to="value"
             target="_blank"
-            class="content-table-content"
+            class="content-table-content hover:underline"
           >
             <slot :name="key + '-icon'" />
+          </NuxtLink>
+
+          <NuxtLink
+            v-else-if="value.startsWith('http')"
+            :to="value"
+            target="_blank"
+            class="content-table-content hover:underline"
+          >
+            <slot :name="key + '-icon'" />
+            {{ value }}
           </NuxtLink>
 
           <span v-else class="content-table-content">
@@ -49,17 +59,26 @@
             {{ value }}
           </span>
 
-          <button
-            v-if="props.columns[index].canCopy"
-            @click.stop="!isMedia(value) && copy(value)"
-            class="p-2 ml-auto"
-          >
-            <Icon
-              name="copy"
-              class="cursor-pointer w-5 h-5 inline-block"
-              aria-label="Copy to clipboard"
-            />
-          </button>
+          <template v-if="props.columns[index].canCopy">
+            <NuxtLink
+              v-if="props.columns[index].isLink"
+              :to="value"
+              target="_blank"
+              class="content-table-content"
+            >
+              {{ value }}
+            </NuxtLink>
+            <button
+              @click.stop="!isMedia(value) && copy(value)"
+              class="p-2 ml-auto"
+            >
+              <Icon
+                name="copy"
+                class="cursor-pointer w-5 h-5 inline-block"
+                aria-label="Copy to clipboard"
+              />
+            </button>
+          </template>
         </td>
       </tr>
     </tbody>
@@ -84,7 +103,6 @@ const props = defineProps<{
   columns: Header[];
   data: Record<string, string | Media>[];
 }>();
-
 function copy(value: string) {
   navigator.clipboard.writeText(value);
 }

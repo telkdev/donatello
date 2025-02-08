@@ -7,6 +7,8 @@ import {
   RichTextBlockType,
 } from "./types";
 
+const runtimeConfig = useRuntimeConfig();
+
 defineProps<{
   data?: RichTextBlocks[];
 }>();
@@ -84,6 +86,12 @@ function renderText(children: RichTextBlockChild[]) {
           <a
             v-else-if="child.type === RichTextBlockChildType.link && child.url"
             :href="child.url"
+            :rel="
+              child.url.startsWith('/') ||
+              child.url.startsWith(runtimeConfig.public.webUrl)
+                ? 'follow'
+                : 'nofollow'
+            "
             v-html="renderText(child.children)"
           />
           <template v-else-if="child.type === RichTextBlockChildType.text">

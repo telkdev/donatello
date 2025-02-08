@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="'category/' + category.displayName"
+    :to="'/category/' + category.slug"
     class="flex flex-col items-center group"
   >
     <div
@@ -9,19 +9,23 @@
       <Image
         :path="category.icon.data.attributes.url"
         :aria-hidden="true"
-        :alt="category.displayName"
+        :alt="category.displayName[locale]"
         class="filter invert brightness-0 group-hover:brightness-100 group-hover:invert-0 transition-all duration-300 ease-in-out"
       />
     </div>
 
     <span class="text-graphic lg:text-xl block text-center">
-      {{ category.displayName }}
+      {{ category.displayName[locale] }}
     </span>
   </NuxtLink>
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from "vue-i18n";
+
 import type { Category } from "../funds/types";
+
+const { locale  } = useI18n();
 
 // TODO: add alt from alternative text
 defineProps<{

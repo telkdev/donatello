@@ -14,10 +14,10 @@
         <span>{{ t('Footer.Copyright') }}</span>
         <ul class="flex items-center gap-1">
           <li>
-            <RouterLink to="/privacy-policy"> {{ t('Footer.Links.Privacy') }}. </RouterLink>
+            <RouterLink to="/privacy-policy"> {{ t('Navigation.Privacy') }}. </RouterLink>
           </li>
           <li>
-            <RouterLink to="/terms-conditions"> {{ t('Footer.Links.Terms') }} </RouterLink>
+            <RouterLink to="/terms-conditions"> {{ t('Navigation.Terms') }} </RouterLink>
           </li>
         </ul>
       </div>

@@ -9,15 +9,15 @@
           <div v-if="category" class="mb-12">
             <h1 class="text-2xl flex items-center mb-4">
               <Image
-                :path="category.attributes.icon.data.attributes.url"
+                :path="categoryMeta.image"
                 class="w-8 h-8 mr-3"
                 :aria-hidden="true"
-                :alt="category.attributes.displayName"
+                :alt="categoryMeta.title"
               />
-              {{ category.attributes.displayName }}
+              {{ categoryMeta.title }}
             </h1>
             <p>
-              {{ category.attributes.description }}
+              {{ categoryMeta.description }}
             </p>
           </div>
 
@@ -58,9 +58,12 @@ const fetchFunds = async (options: { locale: StrapiLocale }) => {
       organization: true,
       category: {
         populate: {
+          id: true,
           icon: {
             fields: ["name", "url"],
           },
+          displayName: "*",
+          description: "*",
         },
       },
       image: {
@@ -70,11 +73,6 @@ const fetchFunds = async (options: { locale: StrapiLocale }) => {
         populate: {
           requisite_type: true,
         },
-      },
-    },
-    filters: {
-      category: {
-        displayName: route.params.Category,
       },
     },
   });
@@ -105,7 +103,9 @@ const { data: funds } = await useAsyncData(
   }
 );
 
-const { filteredFunds } = useFilteredFundsByCategory(computed(() => funds.value || []));
+const { filteredFunds, selectedCategory } = useFilteredFundsByCategory(
+  computed(() => funds.value || [])
+);
 
 const { data: category } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
@@ -113,13 +113,35 @@ const { data: category } = await useAsyncData(async () => {
       icon: {
         fields: ["name", "url", "alternativeText"],
       },
+      displayName: "*",
+      description: "*",
     },
     filters: {
-      displayName: route.params.Category,
+      slug: route.params.category,
     },
     pagination: { limit: 1, start: 0 },
   });
 
   return data[0];
+});
+
+const categoryName = computed(
+  () => category.value?.attributes.displayName?.[locale.value]
+);
+
+watch(
+  categoryName,
+  (val) => {
+    selectedCategory.value = val;
+  },
+  { immediate: true }
+);
+
+const categoryMeta = computed(() => {
+  return {
+    title: category.value?.attributes.displayName?.[locale.value],
+    description: category.value?.attributes.description?.[locale.value],
+    image: category.value?.attributes.icon.data.attributes.url,
+  };
 });
 </script>
