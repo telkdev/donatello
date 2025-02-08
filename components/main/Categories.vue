@@ -5,7 +5,7 @@
         class="gap-5 grid grid-cols-2 lg:flex lg:flex-wrap lg:justify-center lg:gap-10"
       >
         <li class="flex justify-center">
-          <NuxtLink to="/funds" class="flex flex-col items-center group">
+          <NuxtLink :to="allCategoriesEntry.slug" class="flex flex-col items-center group">
             <div
               class="w-20 h-20 bg-graphic rounded-full flex justify-center items-center mb-4 border-2 border-transparent group-hover:border-graphic group-hover:bg-white transition-all duration-300 ease-in-out"
             >
@@ -79,7 +79,7 @@ const allCategoriesEntry = ref<Category>({
       },
     },
   },
-  createdAt: "",
+  slug:"funds",
   displayName: displayName,
   description: description,
 });

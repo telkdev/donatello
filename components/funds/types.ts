@@ -13,7 +13,7 @@ export type LocaleField = {
 
 export type Category = {
   displayName: LocaleField;
-  createdAt: string;
+  slug: string;
   icon: {
     data: WithStrapiStructure<Media>;
   };

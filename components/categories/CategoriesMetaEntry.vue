@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    :to="'category/' + category.displayName[locale]"
+    :to="'/category/' + category.slug"
     class="flex flex-col items-center group"
   >
     <div

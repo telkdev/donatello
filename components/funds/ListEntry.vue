@@ -24,10 +24,10 @@
                   :path="fund.category.data.attributes.icon.data.attributes.url"
                   class="w-4 mr-1"
                   :aria-hidden="true"
-                  :alt="fund.category.data.attributes.displayName[locale]"
+                  :alt="fund.category.data.attributes.displayName?.[locale]"
                 />
 
-                {{ fund.category.data.attributes.displayName[locale] }}
+                {{ fund.category.data.attributes.displayName?.[locale] }}
               </li>
             </ul>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
