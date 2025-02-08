@@ -19,9 +19,6 @@
           <h3 class="uppercase text-grey text-lg text-center mb-2">
             {{ t("Main.About.Information.Donors.Title") }}
           </h3>
-          <span class="text-grey text-sm block mb-2">
-            {{ t("Main.About.Information.Description") }}
-          </span>
           <div class="space-y-2">
             <p>
               {{ t("Main.About.Information.Donors.Steps.First") }}
@@ -58,9 +55,6 @@
           <h3 class="uppercase text-grey text-lg text-center mb-2">
             {{ t("Main.About.Information.Volunteers.Title") }}
           </h3>
-          <span class="text-grey text-sm block mb-2">
-            {{ t("Main.About.Information.Description") }}
-          </span>
           <div class="space-y-2">
             <p>
               {{ t("Main.About.Information.Volunteers.Steps.First") }}

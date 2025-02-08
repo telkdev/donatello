@@ -39,7 +39,6 @@
       "Title": "About our service",
       "Description": "Our service provides a convenient list of charitable organizations for individuals who wish to make donations or get involved in volunteer initiatives. With us, you can easily find and support charitable organizations that interest you and learn more about their activities. We are maintain the accuracy of data about charitable organizations and verify their activities to ensure credibility.",
       "Information": {
-        "Description": "To make a charitable contribution, you need to:",
         "Donors": {
           "Title": "Information for donors",
           "Steps": {
