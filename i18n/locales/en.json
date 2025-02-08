@@ -6,16 +6,14 @@
     }
   },
   "Footer": {
-    "Copyright": "©2024 UA Funds. All Rigts Reserved.",
-    "Links": {
-      "Terms": "Terms of Use",
-      "Privacy": "Privacy Policy"
-    }
+    "Copyright": "©2024 UA Funds. All Rigts Reserved."
   },
   "Navigation": {
     "Home": "Home",
     "About": "About",
-    "Funds": "Funds"
+    "Funds": "Funds",
+    "Terms": "Terms of Use",
+    "Privacy": "Privacy Policy"
   },
   "ActionLinks": {
     "Funds": "Funds List"
