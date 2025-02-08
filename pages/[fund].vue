@@ -59,14 +59,14 @@
               </div>
             </div>
 
-            <button
+            <!-- <button
               :title="t('Fund.Share')"
               class="flex items-center justify-center gap-1 text-sm"
               @click="copy"
             >
               <Icon name="share" class="w-10 h-10 rounded-full" />
               {{ t("Fund.Share") }}
-            </button>
+            </button> -->
           </div>
         </div>
       </div>
