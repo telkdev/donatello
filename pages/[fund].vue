@@ -16,9 +16,7 @@
         <div class="w-full">
           <div class="flex items-center gap-2 flex-wrap mb-4 lg:mb-8">
             <NuxtLink
-              :to="
-                'category/' + fund.category.data.attributes.displayName[locale]
-              "
+              :to="'/category/' + fund.category.data.attributes.slug"
               class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
             >
               <Image
@@ -64,6 +62,7 @@
             <button
               :title="t('Fund.Share')"
               class="flex items-center justify-center gap-1 text-sm"
+              @click="copy"
             >
               <Icon name="share" class="w-10 h-10 rounded-full" />
               {{ t("Fund.Share") }}
@@ -202,8 +201,6 @@ const currentLocale =
   (localeFromCookie.value as unknown as StrapiLocale) || defaultLocale;
 // TODO: check what fields are needed
 const { data: fundFromBackend } = await useAsyncData(async () => {
-  const event = useRequestEvent();
-
   let { data } = await getFund(currentLocale);
   // HOTFIX retry logic with another locale
   if (!data.length) {
@@ -261,7 +258,7 @@ async function getFund(locale: StrapiLocale) {
         },
       },
       filters: {
-        slug: route.params.Fund,
+        slug: route.params.fund,
       },
       pagination: { limit: 1, start: 0 },
     });
@@ -360,6 +357,13 @@ const documents = computed(() => {
 
   return fund.value.documents.data;
 });
+
+function copy() {
+  const text = `${fund.value.title} ${
+    fund.value.organization.data.attributes.name
+  } ${fund.value.totalGoal} ${t("Fund.Currency")}`;
+  navigator.clipboard.writeText(text);
+}
 
 (function useSeo() {
   const title = computed(
