@@ -20,36 +20,25 @@
               <li
                 class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
               >
-                <Image
-                  :path="fund.category.data.attributes.icon.data.attributes.url"
-                  class="w-4 mr-1"
-                  :aria-hidden="true"
-                  :alt="fund.category.data.attributes.displayName[locale]"
-                />
+                <NuxtLink
+                  :to="'/category/' + fund.category.data.attributes.slug"
+                >
+                  <Image
+                    :path="
+                      fund.category.data.attributes.icon.data.attributes.url
+                    "
+                    class="w-4 mr-1"
+                    :aria-hidden="true"
+                    :alt="fund.category.data.attributes.displayName?.[locale]"
+                  />
 
-                {{ fund.category.data.attributes.displayName[locale] }}
+                  {{ fund.category.data.attributes.displayName?.[locale] }}
+                </NuxtLink>
               </li>
             </ul>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
             <span class="text-xs">{{ fundCreatedAt }}</span>
           </div>
-          <button
-            class="flex items-center gap-1 flex-col lg:flex-row"
-            aria-label="Open menu"
-          >
-            <span
-              class="w-[5px] h-[5px] bg-black rounded-full"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="w-[5px] h-[5px] bg-black rounded-full"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="w-[5px] h-[5px] bg-black rounded-full"
-              aria-hidden="true"
-            ></span>
-          </button>
         </div>
         <div class="lg:hidden border border-graphic mb-5">
           <NuxtLink :to="fundPath" :aria-label="fund.title">
