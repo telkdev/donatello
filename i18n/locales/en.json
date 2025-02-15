@@ -1,4 +1,21 @@
 {
+  "Title": {
+    "Home": "UAFunds - Help small Ukranian funds to collect finances for their goals",
+    "About": "UAFunds - About Us",
+    "Funds": "UAFunds - Funds",
+    "Terms": "UAFunds - Terms of Use",
+    "Privacy": "UAFunds - Privacy Policy",
+    "Category": "UAFunds - {category} category"
+  },
+  "Description": {
+    "Home": "UAFunds is a platform that helps small funds to collect finances for their needs. Users can donate money to funds or create funds themselves.",
+    "About": "We are committed to ensuring that every donation is used effectively and transparently. Thank you for your support and trust in our mission.",
+    "Funds": "Discover and support various charitable funds dedicated to different causes. Find the one that resonates with you and make a difference today.",
+    "Terms": "Read our Terms of Use to understand the rules and guidelines for using the UAFunds platform. This page provides detailed information on user responsibilities, legal agreements, and the protection of your rights.",
+    "Privacy": "Read our Privacy Policy to understand how we collect, use, and protect your personal information. This page provides detailed information on our data practices and your privacy rights.",
+    "Fund": "Detail about {title}, how much money they need, what they are going to do with it, how you can help",
+    "Category": "Explore our comprehensive list of {category} funds dedicated to various causes. Each fund in the {category} category is committed to making a significant impact. Learn more about their missions, goals, and how your contributions can help them achieve their objectives. Support {category} funds today and be a part of the change."
+  },
   "Header": {
     "Home": "Home page",
     "Menu": {
@@ -6,7 +23,7 @@
     }
   },
   "Footer": {
-    "Copyright": "©2024 UA Funds. All Rigts Reserved."
+    "Copyright": "©2024 UA Funds. All Rights Reserved."
   },
   "Navigation": {
     "Home": "Home",

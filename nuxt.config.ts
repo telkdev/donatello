@@ -19,11 +19,8 @@ export default defineNuxtConfig({
   },
   i18n: {
     vueI18n: "./i18n/i18n.config.ts",
-    locales: [
-      'en',
-      'uk',
-    ],
-    strategy: 'no_prefix'
+    locales: ["en", "uk"],
+    strategy: "no_prefix",
   },
   runtimeConfig: {
     public: {
@@ -33,7 +30,10 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: "Nuxt Strapi",
+      title: "UAFunds",
+      titleTemplate: (titleChunk) => {
+        return titleChunk ? `UAFunds | ${titleChunk}` : "UAFunds";
+      },
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
 
