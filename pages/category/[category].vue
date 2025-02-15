@@ -173,8 +173,6 @@ function seo() {
   });
 }
 
-seo();
-
 watch(
   categoryName,
   (val) => {
@@ -183,9 +181,13 @@ watch(
   { immediate: true }
 );
 
-watch(locale, () => {
-  seo();
-});
+watch(
+  locale,
+  () => {
+    seo();
+  },
+  { immediate: true }
+);
 
 const categoryMeta = computed(() => {
   return {
