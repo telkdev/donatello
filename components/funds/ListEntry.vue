@@ -17,10 +17,9 @@
         <div class="flex justify-between items-center mb-5">
           <div class="flex items-center gap-2 flex-wrap">
             <ul class="flex items-center flex-wrap gap-2">
-              <li
-                class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
-              >
+              <li class="rounded-2xl bg-light-grey py-2 px-5 text-grey">
                 <NuxtLink
+                  class="flex items-center gap-1"
                   :to="'/category/' + fund.category.data.attributes.slug"
                 >
                   <Image

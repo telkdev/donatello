@@ -9,7 +9,7 @@
           <div v-if="category" class="mb-12">
             <h1 class="text-2xl flex items-center mb-4">
               <Image
-                :path="categoryMeta.image"
+                :path="categoryMeta?.image ?? ''"
                 class="w-8 h-8 mr-3"
                 :aria-hidden="true"
                 :alt="categoryMeta.title"
@@ -39,8 +39,9 @@
 
 <script lang="ts" setup>
 import type { Category, Fund } from "@/components/funds/types";
-import { useFilteredFundsByCategory } from "../useFilteredFundsByCategory";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
+import { useFilteredFundsByCategory } from "../useFilteredFundsByCategory";
+import { LOCALES } from "~/constants/locales";
 
 const route = useRoute();
 
@@ -129,10 +130,61 @@ const categoryName = computed(
   () => category.value?.attributes.displayName?.[locale.value]
 );
 
+function seo() {
+  useHead({
+    meta: [
+      {
+        name: "og:title",
+        content: t("Title.Category", { category: categoryName.value }),
+      },
+      {
+        name: "og:description",
+        content: t("Description.Category", { category: categoryName.value }),
+      },
+      {
+        name: "og:locale",
+        content: LOCALES[locale as any],
+      },
+      {
+        name: "og:type",
+        content: "website",
+      },
+      // {
+      //   name:"twitter:image",
+      //   content: "https://uafunds.com/images/og-image.png",
+      // },
+      {
+        name: "twitter:description",
+        content: t("Description.Category", { category: categoryName.value }),
+      },
+      {
+        name: "twitter:title",
+        content: t("Title.Category", { category: categoryName.value }),
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  });
+  useSeoMeta({
+    title: t("Title.Category", { category: categoryName.value }),
+    description: t("Description.Category", { category: categoryName.value }),
+  });
+}
+
 watch(
   categoryName,
   (val) => {
     selectedCategory.value = val;
+  },
+  { immediate: true }
+);
+
+watch(
+  locale,
+  () => {
+    seo();
   },
   { immediate: true }
 );

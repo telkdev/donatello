@@ -47,6 +47,7 @@ import type { Fund, Category } from "@/components/funds/types";
 import { useFilteredFundsByCategory } from "./useFilteredFundsByCategory";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
+import { LOCALES } from "~/constants/locales";
 
 const { locale, defaultLocale, t } = useI18n();
 const { find } = useStrapi();
@@ -67,6 +68,51 @@ type Meta = {
     total: number;
   };
 };
+
+function seo() {
+  useHead({
+    meta: [
+      {
+        name: "og:title",
+        content: t("Title.Funds"),
+      },
+      {
+        name: "og:description",
+        content: t("Description.Funds"),
+      },
+      {
+        name: "og:locale",
+        content: LOCALES[locale as any],
+      },
+      {
+        name: "og:type",
+        content: "website",
+      },
+      // {
+      //   name:"twitter:image",
+      //   content: "https://uafunds.com/images/og-image.png",
+      // },
+      {
+        name: "twitter:description",
+        content: t("Description.Funds"),
+      },
+      {
+        name: "twitter:title",
+        content: t("Title.Funds"),
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  });
+  useSeoMeta({
+    title: t("Title.Funds"),
+    description: t("Description.Funds"),
+  });
+}
+
+seo();
 
 const fetchFundsAndSetTotal = async (options: Options) => {
   const { locale, page, limit } = options;
@@ -168,6 +214,8 @@ function useFundsPaginationWith(locale: Ref<StrapiLocale>) {
   });
 
   watch(locale, () => {
+    seo();
+
     router.push({
       query: {
         ...route.query,

@@ -366,17 +366,16 @@ function copy() {
 }
 
 (function useSeo() {
-  const title = computed(
-    () =>
-      fund.value?.title ??
-      "UAFunds | Help small ukranian funds to collect finances for their goals"
-  );
+  const title = computed(() => fund.value?.title ?? t("Title.Funds"));
 
   //TODO: description from fund
-  const description = computed(
-    () =>
-      `Detail about ${fund.value?.title}, how much money they need, what they are going to do with it, how you can help`
-  );
+  const description = computed(() => {
+    if (!fund.value?.title) {
+      return t("Description.Funds");
+    }
+
+    return t("Description.Fund", { title: fund.value?.title });
+  });
 
   const { imagePath: image } = useImagePath(
     computed(() => fund.value?.image.data.attributes.url)
