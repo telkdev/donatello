@@ -23,51 +23,53 @@ import { LOCALES } from "~/constants/locales";
 
 const { t, locale } = useI18n();
 
-const title =
-  "UAFunds | Help small Ukranian funds to collect finances for their goals";
-const description =
-  "UAFunds is a platform that helps small funds to collect finances for their needs. Users can donate money to funds or create funds themselves.";
+function seo() {
+  useHead({
+    meta: [
+      {
+        name: "og:title",
+        content: t("Title.Home"),
+      },
+      {
+        name: "og:description",
+        content: t("Description.Home"),
+      },
+      {
+        name: "og:locale",
+        content: LOCALES[locale as any],
+      },
+      {
+        name: "og:type",
+        content: "website",
+      },
+      // {
+      //   name:"twitter:image",
+      //   content: "https://uafunds.com/images/og-image.png",
+      // },
+      {
+        name: "twitter:description",
+        content: t("Description.Home"),
+      },
+      {
+        name: "twitter:title",
+        content: t("Title.Home"),
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  });
 
-useHead({
-  meta: [
-    {
-      name: "og:title",
-      content: title,
-    },
-    {
-      name: "og:description",
-      content: description,
-    },
-    {
-      name: "og:locale",
-      content: LOCALES[locale as any],
-    },
-    {
-      name: "og:type",
-      content: "website",
-    },
-    // {
-    //   name:"twitter:image",
-    //   content: "https://uafunds.com/images/og-image.png",
-    // },
-    {
-      name: "twitter:description",
-      content: description,
-    },
-    {
-      name: "twitter:title",
-      content: title,
-    },
-    {
-      name: "twitter:card",
-      content: "summary_large_image",
+  useSeoMeta({
+    title: t("Title.Home"),
+    description: t("Description.Home"),
+  });
+}
 
-    },
-  ],
-});
+seo();
 
-useSeoMeta({
-  title,
-  description,
+watch(locale, () => {
+  seo();
 });
 </script>
