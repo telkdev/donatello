@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-2xl text-grey uppercase mb-10 md:mb-16">
+    <h3 class="text-2xl text-graphic uppercase mb-10 md:mb-16">
       {{ t("TopFunds.Title") }}
     </h3>
 
@@ -10,7 +10,7 @@
         :key="fund.title"
         class="p-6 border w-full border-graphic bg-mid-grey"
       >
-        <NuxtLink :to="fund.slug" class="flex flex-col items-center gap-6">
+        <NuxtLink :to="`/${fund.slug}`" class="flex flex-col items-center gap-6">
           <Image
             :path="fund.image.data.attributes.url"
             class="w-20 h-20"

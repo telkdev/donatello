@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavigationSecondary />
-    <div class="bg-light-grey-100">
+    <div>
       <div
         class="grid grid-rows-2 md:grid-rows-1 gap-4 md:grid-cols-4 container py-12"
       >
@@ -45,7 +45,7 @@ import { LOCALES } from "~/constants/locales";
 
 const route = useRoute();
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, fallbackLocale, t } = useI18n();
 const { localeFromCookie } = useLocalesFromCookie();
 
 const { find } = useStrapi();
@@ -94,9 +94,9 @@ const { data: funds } = await useAsyncData(
   async () => {
     return await fetchFunds({
       locale:
-        locale.value ||
+        locale.value as unknown as StrapiLocale ||
         (localeFromCookie.value as unknown as StrapiLocale) ||
-        defaultLocale,
+        fallbackLocale.value as unknown as StrapiLocale,
     });
   },
   {

@@ -55,7 +55,7 @@
               }}</span>
               <div>
                 <span class="text-lg lg:text-3xl"> {{ fund.totalGoal }} </span>
-                <span class="lg:text-lg">{{ t("Fund.Currency") }}</span>
+                <span class="text-lg lg:text-3xl font-bold">{{ t("Fund.Currency") }}</span>
               </div>
             </div>
 
@@ -153,15 +153,19 @@
 <script lang="ts" setup>
 import type { Fund } from "~/components/funds/types";
 import { useMediaQuery } from "@vueuse/core";
-import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
+import {
+  fromStrapiDataStracrture,
+  type WithStrapiStructure,
+} from "~/utilities/strapiDataStructure";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 import { useLocalesStore } from "~/stores/locales";
 import { LOCALES } from "~/constants/locales";
+import { CANONICAL_PRIORITY } from "~/constants/canonicalPriority";
 
 const {
   locale,
   availableLocales,
-  defaultLocale,
+  fallbackLocale,
   t,
   setLocaleCookie,
   setLocale,
@@ -198,7 +202,7 @@ watch(locale, async (locale) => {
 const { localeFromCookie } = useLocalesFromCookie();
 
 const currentLocale =
-  (localeFromCookie.value as unknown as StrapiLocale) || defaultLocale;
+  (localeFromCookie.value as unknown as StrapiLocale) || fallbackLocale.value;
 // TODO: check what fields are needed
 const { data: fundFromBackend } = await useAsyncData(async () => {
   let { data } = await getFund(currentLocale);
@@ -381,7 +385,43 @@ function copy() {
     computed(() => fund.value?.image.data.attributes.url)
   );
 
+  function getCanonical(fund: Fund): string | null {
+    if (!fund) return null;
+
+    function link(slug: string) {
+      return `${runtimeConfig.public.serverUrl}/${slug}`;
+    }
+
+    if (fund?.locale === CANONICAL_PRIORITY[0]) {
+      return link(fund.slug);
+    }
+
+    if (fund.localizations.data.length) {
+      let target: WithStrapiStructure<Fund> | undefined;
+
+      CANONICAL_PRIORITY.every((locale) => {
+        const localizedFund = fund.localizations.data.find(
+          (localization) => localization.attributes.locale === locale
+        );
+
+        if (localizedFund) {
+          target = localizedFund;
+          return false;
+        }
+      });
+
+      if (target) {
+        return link(target.attributes.slug);
+      }
+    }
+
+    return link(fund.slug);
+  }
+
+  const canonicalUrl = getCanonical(fund.value);
+
   useHead({
+    link: [canonicalUrl ? { rel: "canonical", href: canonicalUrl } : {}],
     meta: [
       {
         name: "og:title",
