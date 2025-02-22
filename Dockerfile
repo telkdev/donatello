@@ -6,6 +6,9 @@ WORKDIR /usr/src/app
 ARG SERVER_URL
 ENV SERVER_URL=$SERVER_URL
 
+ARG WEB_URL
+ENV WEB_URL=$WEB_URL
+
 RUN npm install -g pnpm
 
 ADD . /usr/src/app/
