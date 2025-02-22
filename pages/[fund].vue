@@ -161,7 +161,7 @@ import { LOCALES } from "~/constants/locales";
 const {
   locale,
   availableLocales,
-  defaultLocale,
+  fallbackLocale,
   t,
   setLocaleCookie,
   setLocale,
@@ -198,12 +198,13 @@ watch(locale, async (locale) => {
 const { localeFromCookie } = useLocalesFromCookie();
 
 const currentLocale =
-  (localeFromCookie.value as unknown as StrapiLocale) || defaultLocale;
+  (localeFromCookie.value as unknown as StrapiLocale) || fallbackLocale.value;
 // TODO: check what fields are needed
 const { data: fundFromBackend } = await useAsyncData(async () => {
   let { data } = await getFund(currentLocale);
   // HOTFIX retry logic with another locale
   if (!data.length) {
+
     const [retryLocale] = availableLocales.filter(
       (l) => l !== currentLocale
     ) as StrapiLocale[];

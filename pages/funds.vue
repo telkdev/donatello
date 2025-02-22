@@ -49,7 +49,7 @@ import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
 import { LOCALES } from "~/constants/locales";
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, fallbackLocale, t } = useI18n();
 const { find } = useStrapi();
 
 const { localeFromCookie } = useLocalesFromCookie();
@@ -153,9 +153,9 @@ const { data: strapiFunds } = await useAsyncData(
       page: page.value,
       limit: limit.value,
       locale:
-        locale.value ||
+        locale.value as unknown as StrapiLocale ||
         (localeFromCookie?.value as unknown as StrapiLocale) ||
-        defaultLocale,
+        (fallbackLocale?.value as unknown as StrapiLocale),
     });
   },
   {

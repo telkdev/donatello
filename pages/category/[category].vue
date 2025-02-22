@@ -45,7 +45,7 @@ import { LOCALES } from "~/constants/locales";
 
 const route = useRoute();
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, fallbackLocale, t } = useI18n();
 const { localeFromCookie } = useLocalesFromCookie();
 
 const { find } = useStrapi();
@@ -94,9 +94,9 @@ const { data: funds } = await useAsyncData(
   async () => {
     return await fetchFunds({
       locale:
-        locale.value ||
+        locale.value as unknown as StrapiLocale ||
         (localeFromCookie.value as unknown as StrapiLocale) ||
-        defaultLocale,
+        fallbackLocale.value as unknown as StrapiLocale,
     });
   },
   {
