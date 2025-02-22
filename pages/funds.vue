@@ -1,44 +1,41 @@
 <template>
   <div>
-    <NavigationSecondary />
-    <div class="bg-light-grey-100">
-      <div
-        class="grid grid-rows-2 md:grid-rows-1 gap-4 md:grid-cols-4 container py-12"
-      >
-        <div class="md:col-span-3">
-          <div class="flex items-center gap-2 flex-wrap justify-between mb-12">
-            <h1 class="text-2xl text-grey uppercase">{{ t("Funds.Title") }}</h1>
-            <Select
-              v-model="selectedCategory"
-              :options="categoriesOptions"
-              class="max-w-[380px] w-full"
-            />
-          </div>
-          <div v-if="filteredFunds?.length">
-            <ul class="space-y-8">
-              <li v-for="fund of filteredFunds" :key="`fund-${fund.id}`">
-                <FundsListEntry :fund="fund" />
-              </li>
-            </ul>
-            <ClientOnly>
-              <div v-if="loadMoreEnabled" class="flex mt-4 justify-center">
-                <button
-                  @click="loadMore"
-                  class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
-                >
-                  Load more
-                </button>
-              </div>
-            </ClientOnly>
-          </div>
-
-          <div v-else>{{ t("Funds.NoFunds") }}</div>
+    <div
+      class="grid grid-rows-2 md:grid-rows-1 gap-4 md:grid-cols-4 container py-12"
+    >
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-2 flex-wrap justify-between mb-12">
+          <h1 class="text-2xl text-graphic uppercase">{{ t("Funds.Title") }}</h1>
+          <Select
+            v-model="selectedCategory"
+            :options="categoriesOptions"
+            class="max-w-[380px] w-full"
+          />
         </div>
-        <aside class="mt-2 space-y-10 md:space-y-16">
-          <!-- <AsidesClosestToCompleteFunds :funds="funds || []" /> -->
-          <AsidesTopFunds :funds="funds || []" />
-        </aside>
+        <div v-if="filteredFunds?.length">
+          <ul class="space-y-8">
+            <li v-for="fund of filteredFunds" :key="`fund-${fund.id}`">
+              <FundsListEntry :fund="fund" />
+            </li>
+          </ul>
+          <ClientOnly>
+            <div v-if="loadMoreEnabled" class="flex mt-4 justify-center">
+              <button
+                @click="loadMore"
+                class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
+              >
+                Load more
+              </button>
+            </div>
+          </ClientOnly>
+        </div>
+
+        <div v-else>{{ t("Funds.NoFunds") }}</div>
       </div>
+      <aside class="mt-2 space-y-10 md:space-y-16">
+        <!-- <AsidesClosestToCompleteFunds :funds="funds || []" /> -->
+        <AsidesTopFunds :funds="funds || []" />
+      </aside>
     </div>
   </div>
 </template>
@@ -48,8 +45,9 @@ import type { Fund, Category } from "@/components/funds/types";
 import { useFilteredFundsByCategory } from "./useFilteredFundsByCategory";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
 import { fromStrapiDataStracrture } from "~/utilities/strapiDataStructure";
+import { LOCALES } from "~/constants/locales";
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, fallbackLocale, t } = useI18n();
 const { find } = useStrapi();
 
 const { localeFromCookie } = useLocalesFromCookie();
@@ -69,6 +67,51 @@ type Meta = {
   };
 };
 
+function seo() {
+  useHead({
+    meta: [
+      {
+        name: "og:title",
+        content: t("Title.Funds"),
+      },
+      {
+        name: "og:description",
+        content: t("Description.Funds"),
+      },
+      {
+        name: "og:locale",
+        content: LOCALES[locale as any],
+      },
+      {
+        name: "og:type",
+        content: "website",
+      },
+      // {
+      //   name:"twitter:image",
+      //   content: "https://uafunds.com/images/og-image.png",
+      // },
+      {
+        name: "twitter:description",
+        content: t("Description.Funds"),
+      },
+      {
+        name: "twitter:title",
+        content: t("Title.Funds"),
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  });
+  useSeoMeta({
+    title: t("Title.Funds"),
+    description: t("Description.Funds"),
+  });
+}
+
+seo();
+
 const fetchFundsAndSetTotal = async (options: Options) => {
   const { locale, page, limit } = options;
 
@@ -78,6 +121,8 @@ const fetchFundsAndSetTotal = async (options: Options) => {
       organization: true,
       category: {
         populate: {
+          displayName: "*",
+          description: "*",
           icon: {
             fields: ["name", "url"],
           },
@@ -106,9 +151,9 @@ const { data: strapiFunds } = await useAsyncData(
       page: page.value,
       limit: limit.value,
       locale:
-        locale.value ||
-        (localeFromCookie.value as unknown as StrapiLocale) ||
-        defaultLocale,
+        locale.value as unknown as StrapiLocale ||
+        (localeFromCookie?.value as unknown as StrapiLocale) ||
+        (fallbackLocale?.value as unknown as StrapiLocale),
     });
   },
   {
@@ -118,13 +163,13 @@ const { data: strapiFunds } = await useAsyncData(
 
 const { data: categories } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
-    populate: ["icon"],
+    populate: ["icon", "description", "displayName"],
   });
 
   return data;
 });
 
-// TODOL rewname strapi funds
+// TODO rename strapi funds
 const total = computed(
   () => (strapiFunds.value?.meta as Meta).pagination?.total || 0
 );
@@ -134,8 +179,9 @@ const funds = computed(() =>
 
 const categoriesOptions = computed(() => [
   DEFAULT_CATEGORY,
-  ...(categories.value?.map((category) => category.attributes.displayName) ||
-    []),
+  ...(categories.value?.map(
+    (category) => category?.attributes?.displayName?.[locale.value]
+  ) || []),
 ]);
 
 const { DEFAULT_CATEGORY, filteredFunds, selectedCategory } =
@@ -166,6 +212,8 @@ function useFundsPaginationWith(locale: Ref<StrapiLocale>) {
   });
 
   watch(locale, () => {
+    seo();
+
     router.push({
       query: {
         ...route.query,

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-sm p-5 lg:p-8">
+  <div class="bg-white p-5 lg:p-8 border border-graphic">
     <div class="lg:flex mb-5">
       <div
         class="hidden lg:block mr-8 border border-graphic flex-shrink-0 w-32 h-32"
@@ -17,39 +17,27 @@
         <div class="flex justify-between items-center mb-5">
           <div class="flex items-center gap-2 flex-wrap">
             <ul class="flex items-center flex-wrap gap-2">
-              <li
-                class="rounded-2xl bg-light-grey py-2 px-5 flex items-center gap-1 text-grey"
-              >
-                <Image
-                  :path="fund.category.data.attributes.icon.data.attributes.url"
-                  class="w-4 mr-1"
-                  :aria-hidden="true"
-                  :alt="fund.category.data.attributes.displayName"
-                />
+              <li class="rounded-2xl bg-light-grey py-2 px-5 text-grey">
+                <NuxtLink
+                  class="flex items-center gap-1"
+                  :to="'/category/' + fund.category.data.attributes.slug"
+                >
+                  <Image
+                    :path="
+                      fund.category.data.attributes.icon.data.attributes.url
+                    "
+                    class="w-4 mr-1"
+                    :aria-hidden="true"
+                    :alt="fund.category.data.attributes.displayName?.[locale]"
+                  />
 
-                {{ fund.category.data.attributes.displayName }}
+                  {{ fund.category.data.attributes.displayName?.[locale] }}
+                </NuxtLink>
               </li>
             </ul>
             <span class="w-[2px] h-[2px] bg-black rounded-full"></span>
             <span class="text-xs">{{ fundCreatedAt }}</span>
           </div>
-          <button
-            class="flex items-center gap-1 flex-col lg:flex-row"
-            aria-label="Open menu"
-          >
-            <span
-              class="w-[5px] h-[5px] bg-black rounded-full"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="w-[5px] h-[5px] bg-black rounded-full"
-              aria-hidden="true"
-            ></span>
-            <span
-              class="w-[5px] h-[5px] bg-black rounded-full"
-              aria-hidden="true"
-            ></span>
-          </button>
         </div>
         <div class="lg:hidden border border-graphic mb-5">
           <NuxtLink :to="fundPath" :aria-label="fund.title">
@@ -92,7 +80,7 @@
         <span class="block uppercase mb-1">{{ t("Funds.TotalGoal") }}</span>
         <div>
           <span class="text-xl"> {{ fund.totalGoal }} </span>
-          <span>₴</span>
+          <span class="text-xl font-bold">{{ t("Fund.Currency") }}</span>
         </div>
       </div>
       <ActionLink
@@ -115,7 +103,7 @@ const props = defineProps<{
   fund: Fund;
 }>();
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const requisites = computed(() => {
   return props.fund.requisites.data.map((requisit) => {

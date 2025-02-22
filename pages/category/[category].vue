@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavigationSecondary />
-    <div class="bg-light-grey-100">
+    <div>
       <div
         class="grid grid-rows-2 md:grid-rows-1 gap-4 md:grid-cols-4 container py-12"
       >
@@ -9,15 +9,15 @@
           <div v-if="category" class="mb-12">
             <h1 class="text-2xl flex items-center mb-4">
               <Image
-                :path="category.attributes.icon.data.attributes.url"
+                :path="categoryMeta?.image ?? ''"
                 class="w-8 h-8 mr-3"
                 :aria-hidden="true"
-                :alt="category.attributes.displayName"
+                :alt="categoryMeta.title"
               />
-              {{ category.attributes.displayName }}
+              {{ categoryMeta.title }}
             </h1>
             <p>
-              {{ category.attributes.description }}
+              {{ categoryMeta.description }}
             </p>
           </div>
 
@@ -39,12 +39,13 @@
 
 <script lang="ts" setup>
 import type { Category, Fund } from "@/components/funds/types";
-import { useFilteredFundsByCategory } from "../useFilteredFundsByCategory";
 import type { StrapiLocale } from "@nuxtjs/strapi/dist/runtime/types";
+import { useFilteredFundsByCategory } from "../useFilteredFundsByCategory";
+import { LOCALES } from "~/constants/locales";
 
 const route = useRoute();
 
-const { locale, defaultLocale, t } = useI18n();
+const { locale, fallbackLocale, t } = useI18n();
 const { localeFromCookie } = useLocalesFromCookie();
 
 const { find } = useStrapi();
@@ -58,9 +59,12 @@ const fetchFunds = async (options: { locale: StrapiLocale }) => {
       organization: true,
       category: {
         populate: {
+          id: true,
           icon: {
             fields: ["name", "url"],
           },
+          displayName: "*",
+          description: "*",
         },
       },
       image: {
@@ -70,11 +74,6 @@ const fetchFunds = async (options: { locale: StrapiLocale }) => {
         populate: {
           requisite_type: true,
         },
-      },
-    },
-    filters: {
-      category: {
-        displayName: route.params.Category,
       },
     },
   });
@@ -95,9 +94,9 @@ const { data: funds } = await useAsyncData(
   async () => {
     return await fetchFunds({
       locale:
-        locale.value ||
+        locale.value as unknown as StrapiLocale ||
         (localeFromCookie.value as unknown as StrapiLocale) ||
-        defaultLocale,
+        fallbackLocale.value as unknown as StrapiLocale,
     });
   },
   {
@@ -105,7 +104,9 @@ const { data: funds } = await useAsyncData(
   }
 );
 
-const { filteredFunds } = useFilteredFundsByCategory(computed(() => funds.value || []));
+const { filteredFunds, selectedCategory } = useFilteredFundsByCategory(
+  computed(() => funds.value || [])
+);
 
 const { data: category } = await useAsyncData(async () => {
   const { data } = await find<Category>("categories", {
@@ -113,13 +114,86 @@ const { data: category } = await useAsyncData(async () => {
       icon: {
         fields: ["name", "url", "alternativeText"],
       },
+      displayName: "*",
+      description: "*",
     },
     filters: {
-      displayName: route.params.Category,
+      slug: route.params.category,
     },
     pagination: { limit: 1, start: 0 },
   });
 
   return data[0];
+});
+
+const categoryName = computed(
+  () => category.value?.attributes.displayName?.[locale.value]
+);
+
+function seo() {
+  useHead({
+    meta: [
+      {
+        name: "og:title",
+        content: t("Title.Category", { category: categoryName.value }),
+      },
+      {
+        name: "og:description",
+        content: t("Description.Category", { category: categoryName.value }),
+      },
+      {
+        name: "og:locale",
+        content: LOCALES[locale as any],
+      },
+      {
+        name: "og:type",
+        content: "website",
+      },
+      // {
+      //   name:"twitter:image",
+      //   content: "https://uafunds.com/images/og-image.png",
+      // },
+      {
+        name: "twitter:description",
+        content: t("Description.Category", { category: categoryName.value }),
+      },
+      {
+        name: "twitter:title",
+        content: t("Title.Category", { category: categoryName.value }),
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  });
+  useSeoMeta({
+    title: t("Title.Category", { category: categoryName.value }),
+    description: t("Description.Category", { category: categoryName.value }),
+  });
+}
+
+watch(
+  categoryName,
+  (val) => {
+    selectedCategory.value = val;
+  },
+  { immediate: true }
+);
+
+watch(
+  locale,
+  () => {
+    seo();
+  },
+  { immediate: true }
+);
+
+const categoryMeta = computed(() => {
+  return {
+    title: category.value?.attributes.displayName?.[locale.value],
+    description: category.value?.attributes.description?.[locale.value],
+    image: category.value?.attributes.icon.data.attributes.url,
+  };
 });
 </script>

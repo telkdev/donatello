@@ -1,3 +1,5 @@
 User-Agent: *
 Allow: http://uafunds.org/
+Allow: https://api.uafunds.org/robots.txt
+Allow: https://api.uafunds.org/api/sitemap/index.xml
 Disallow: http://api.uafunds.org/

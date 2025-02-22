@@ -39,7 +39,59 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
+import { LOCALES } from "~/constants/locales";
+
+const { t, locale } = useI18n();
+
+function seo() {
+  useHead({
+    meta: [
+      {
+        name: "og:title",
+        content: t("Title.About"),
+      },
+      {
+        name: "og:description",
+        content: t("Description.About"),
+      },
+      {
+        name: "og:locale",
+        content: LOCALES[locale as any],
+      },
+      {
+        name: "og:type",
+        content: "website",
+      },
+      // {
+      //   name:"twitter:image",
+      //   content: "https://uafunds.com/images/og-image.png",
+      // },
+      {
+        name: "twitter:description",
+        content: t("Description.About"),
+      },
+      {
+        name: "twitter:title",
+        content: t("Title.About"),
+      },
+      {
+        name: "twitter:card",
+        content: "summary_large_image",
+      },
+    ],
+  });
+
+  useSeoMeta({
+    title: t("Title.About"),
+    description: t("Description.About"),
+  });
+}
+
+seo();
+
+watch(locale, () => {
+  seo();
+});
 
 const faq = computed(() => [
   {

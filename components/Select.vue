@@ -4,7 +4,7 @@
       class="px-4 md:px-8 py-2 md:py-4 bg-light-grey flex items-center justify-between gap-2 w-full"
       @click="toggle"
     >
-      <span class="text-graphic">{{ props.modelValue }}</span>
+      <span class="text-black">{{ props.modelValue }}</span>
       <Icon
         name="triangle"
         class="flex-shrink-0"
