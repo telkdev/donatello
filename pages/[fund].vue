@@ -389,7 +389,7 @@ function copy() {
     if (!fund) return null;
 
     function link(slug: string) {
-      return `${runtimeConfig.public.serverUrl}/${slug}`;
+      return `${runtimeConfig.public.webUrl}/${slug}`;
     }
 
     if (fund?.locale === CANONICAL_PRIORITY[0]) {
