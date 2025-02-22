@@ -55,7 +55,7 @@
               }}</span>
               <div>
                 <span class="text-lg lg:text-3xl"> {{ fund.totalGoal }} </span>
-                <span class="lg:text-lg">{{ t("Fund.Currency") }}</span>
+                <span class="text-lg lg:text-3xl font-bold">{{ t("Fund.Currency") }}</span>
               </div>
             </div>
 

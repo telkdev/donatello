@@ -23,17 +23,17 @@ type Social = {
 const socials = ref<Social[]>([
   {
     name: "Facebook",
-    path: "https://www.facebook.com/0xkowloon",
+    path: "/",
     icon: "facebook",
   },
   {
     name: "Telegram",
-    path: "telegram",
+    path: "/",
     icon: "telegram",
   },
   {
     name: "Instagram",
-    path: "https://instagram.com/0xkowloon",
+    path: "/",
     icon: "instagram",
   },
 ]);

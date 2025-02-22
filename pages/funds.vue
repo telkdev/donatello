@@ -1,43 +1,41 @@
 <template>
   <div>
-    <div class="bg-light-grey-100">
-      <div
-        class="grid grid-rows-2 md:grid-rows-1 gap-4 md:grid-cols-4 container py-12"
-      >
-        <div class="md:col-span-3">
-          <div class="flex items-center gap-2 flex-wrap justify-between mb-12">
-            <h1 class="text-2xl text-grey uppercase">{{ t("Funds.Title") }}</h1>
-            <Select
-              v-model="selectedCategory"
-              :options="categoriesOptions"
-              class="max-w-[380px] w-full"
-            />
-          </div>
-          <div v-if="filteredFunds?.length">
-            <ul class="space-y-8">
-              <li v-for="fund of filteredFunds" :key="`fund-${fund.id}`">
-                <FundsListEntry :fund="fund" />
-              </li>
-            </ul>
-            <ClientOnly>
-              <div v-if="loadMoreEnabled" class="flex mt-4 justify-center">
-                <button
-                  @click="loadMore"
-                  class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
-                >
-                  Load more
-                </button>
-              </div>
-            </ClientOnly>
-          </div>
-
-          <div v-else>{{ t("Funds.NoFunds") }}</div>
+    <div
+      class="grid grid-rows-2 md:grid-rows-1 gap-4 md:grid-cols-4 container py-12"
+    >
+      <div class="md:col-span-3">
+        <div class="flex items-center gap-2 flex-wrap justify-between mb-12">
+          <h1 class="text-2xl text-graphic uppercase">{{ t("Funds.Title") }}</h1>
+          <Select
+            v-model="selectedCategory"
+            :options="categoriesOptions"
+            class="max-w-[380px] w-full"
+          />
         </div>
-        <aside class="mt-2 space-y-10 md:space-y-16">
-          <!-- <AsidesClosestToCompleteFunds :funds="funds || []" /> -->
-          <AsidesTopFunds :funds="funds || []" />
-        </aside>
+        <div v-if="filteredFunds?.length">
+          <ul class="space-y-8">
+            <li v-for="fund of filteredFunds" :key="`fund-${fund.id}`">
+              <FundsListEntry :fund="fund" />
+            </li>
+          </ul>
+          <ClientOnly>
+            <div v-if="loadMoreEnabled" class="flex mt-4 justify-center">
+              <button
+                @click="loadMore"
+                class="py-4 px-8 text-center border text-graphic bg-transparent border-graphic hover:bg-graphic hover:text-white"
+              >
+                Load more
+              </button>
+            </div>
+          </ClientOnly>
+        </div>
+
+        <div v-else>{{ t("Funds.NoFunds") }}</div>
       </div>
+      <aside class="mt-2 space-y-10 md:space-y-16">
+        <!-- <AsidesClosestToCompleteFunds :funds="funds || []" /> -->
+        <AsidesTopFunds :funds="funds || []" />
+      </aside>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white shadow-sm p-5 lg:p-8">
+  <div class="bg-white p-5 lg:p-8 border border-graphic">
     <div class="lg:flex mb-5">
       <div
         class="hidden lg:block mr-8 border border-graphic flex-shrink-0 w-32 h-32"
@@ -80,7 +80,7 @@
         <span class="block uppercase mb-1">{{ t("Funds.TotalGoal") }}</span>
         <div>
           <span class="text-xl"> {{ fund.totalGoal }} </span>
-          <span>₴</span>
+          <span class="text-xl font-bold">{{ t("Fund.Currency") }}</span>
         </div>
       </div>
       <ActionLink

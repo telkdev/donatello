@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="flex items-center gap-1 rounded-xl overflow-hidden border border-graphic"
+    class="flex items-center gap-1 rounded-2xl overflow-hidden border border-graphic"
   >
     <li v-for="value of values" class="py-1 px-2 text-grey">
       <button

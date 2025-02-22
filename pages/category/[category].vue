@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavigationSecondary />
-    <div class="bg-light-grey-100">
+    <div>
       <div
         class="grid grid-rows-2 md:grid-rows-1 gap-4 md:grid-cols-4 container py-12"
       >
